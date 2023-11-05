@@ -1,9 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.BBTeamGo" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.BBTeamGo" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
     <style name="Theme.BBTeamGo" parent="Base.Theme.BBTeamGo" />
+
+    <style name="ButtonStyle" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:background">@drawable/bluebutton</item>
+        <item name="android:radius">160dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
 </resources>
