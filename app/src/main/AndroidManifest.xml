@@ -13,6 +13,15 @@
         android:theme="@style/Theme.BBTeamGo"
         tools:targetApi="31">
         <activity
+            android:name=".ManagerTableActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManagerBoothPasswordDialogActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManagerStartActivity"
+            android:exported="false" />
+        <activity
             android:name=".EnterNewPasswordActivity"
             android:exported="false" />
         <activity

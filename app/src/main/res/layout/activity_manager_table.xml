@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ManagerTableActivity">
+
+    <ImageView
+        android:id="@+id/navigation_bar"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:src="@drawable/navigationbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/homeicon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/homeicon"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/reveueicon"
+        app:layout_constraintBottom_toBottomOf="@id/navigation_bar"
+        app:layout_constraintTop_toTopOf="@id/navigation_bar"
+        app:layout_constraintHorizontal_weight="1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="좌석"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/homeicon"
+        app:layout_constraintStart_toStartOf="@id/homeicon"
+        app:layout_constraintEnd_toEndOf="@id/homeicon" />
+
+    <ImageButton
+        android:id="@+id/reveueicon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/reveueicon"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintStart_toEndOf="@id/homeicon"
+        app:layout_constraintEnd_toStartOf="@id/reservationicon"
+        app:layout_constraintBottom_toBottomOf="@id/navigation_bar"
+        app:layout_constraintTop_toTopOf="@id/navigation_bar"
+        app:layout_constraintHorizontal_weight="1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="총수입"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/reveueicon"
+        app:layout_constraintStart_toStartOf="@id/reveueicon"
+        app:layout_constraintEnd_toEndOf="@id/reveueicon" />
+
+    <ImageButton
+        android:id="@+id/reservationicon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/reservationicon"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintStart_toEndOf="@id/reveueicon"
+        app:layout_constraintEnd_toStartOf="@id/ordericon"
+        app:layout_constraintBottom_toBottomOf="@id/navigation_bar"
+        app:layout_constraintTop_toTopOf="@id/navigation_bar"
+        app:layout_constraintHorizontal_weight="1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="예약관리"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/reservationicon"
+        app:layout_constraintStart_toStartOf="@id/reservationicon"
+        app:layout_constraintEnd_toEndOf="@id/reservationicon" />
+
+
+    <ImageButton
+        android:id="@+id/ordericon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/odericon"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintStart_toEndOf="@id/reservationicon"
+        app:layout_constraintEnd_toStartOf="@id/usericon"
+        app:layout_constraintBottom_toBottomOf="@id/navigation_bar"
+        app:layout_constraintTop_toTopOf="@id/navigation_bar"
+        app:layout_constraintHorizontal_weight="1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="주문내역"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/ordericon"
+        app:layout_constraintStart_toStartOf="@id/ordericon"
+        app:layout_constraintEnd_toEndOf="@id/ordericon" />
+
+
+    <ImageButton
+        android:id="@+id/usericon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/usericon"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/ordericon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/navigation_bar"
+        app:layout_constraintTop_toTopOf="@id/navigation_bar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="내 정보"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/usericon"
+        app:layout_constraintStart_toStartOf="@id/usericon"
+        app:layout_constraintEnd_toEndOf="@id/usericon" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
