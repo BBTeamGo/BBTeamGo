@@ -1,9 +1,28 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.BBTeamGo" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.BBTeamGo" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
     <style name="Theme.BBTeamGo" parent="Base.Theme.BBTeamGo" />
+    <style name="SearchFestival_cmh">
+        <item name="paddingStart">15dp</item>
+        <item name="android:background">@drawable/search_input</item>
+    </style>
+    <style name="ReservationBox_cml">
+        <item name="android:background">@drawable/reservationtop</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:padding">20dp</item>
+    </style>
+    <style name="ProfileCircle">
+        <item name="android:background">@drawable/circle</item>
+    </style>
+    <style name="nameCard">
+        <item name="android:background">@drawable/name_card</item>
+    </style>
+
 </resources>

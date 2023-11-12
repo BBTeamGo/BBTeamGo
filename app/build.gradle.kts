@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.example.bbteamgo"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.bbteamgo"
@@ -35,6 +35,9 @@ android {
 }
 
 dependencies {
+
+    //for circle imageview
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")

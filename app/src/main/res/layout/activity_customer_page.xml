@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CustomerPageActivity">
+    android:background="@drawable/map"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <EditText
+            android:id="@+id/search_festival"
+            style="@style/SearchFestival_cmh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="23dp"
+            android:hint="Search"
+            android:padding="18dp"
+            android:paddingEnd="260dp"
+            android:paddingBottom="15dp"
+            android:textSize="20dp" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="800px"
+            android:layout_weight="1">
+
+        </ListView>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#FBFBFB"
+        app:labelVisibilityMode="labeled"
+        app:itemTextColor="@drawable/menu_item_color"
+        app:itemIconTint="@drawable/menu_item_color"
+        app:menu="@menu/main_menu_bottom"
+       />
+
+</LinearLayout>
