@@ -23,6 +23,7 @@ public class BookingManagementPageActivity extends AppCompatActivity {
         data.add(new BookingManagementData(2, "공민기", "15분 21초"));
         data.add(new BookingManagementData(3, "이종은", "12분 30초"));
 
+
         /*추가하고 싶은 데이터를 위의 양식 (순서(int), 예약자명, 경과시간(타이머로 나중에 바꿔야됌) 을 적어주면 리스트에 추가된다.*/
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
