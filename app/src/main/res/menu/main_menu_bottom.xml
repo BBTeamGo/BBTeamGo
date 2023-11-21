@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home_botton"
+        android:title="홈"
+        android:icon="@drawable/newhomeicon"
+        />
+    <item
+        android:id="@+id/reservation_botton"
+        android:title="내 예약"
+        android:icon="@drawable/newreservationicon"
+        />
+    <item
+        android:id="@+id/my_order_botton"
+        android:title="내 주문"
+        android:icon="@drawable/newordericon"/>
+    <item
+        android:id="@+id/mypage"
+        android:title="내 계정"
+        android:icon="@drawable/newusericon"/>
+    
+</menu>
