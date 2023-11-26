@@ -4,20 +4,20 @@
     <item
         android:id="@+id/home_botton"
         android:title="홈"
-        android:icon="@drawable/newhomeicon"
+        android:icon="@drawable/home"
         />
     <item
         android:id="@+id/reservation_botton"
         android:title="내 예약"
-        android:icon="@drawable/newreservationicon"
+        android:icon="@drawable/reservation"
         />
     <item
         android:id="@+id/my_order_botton"
         android:title="내 주문"
-        android:icon="@drawable/newordericon"/>
+        android:icon="@drawable/order"/>
     <item
         android:id="@+id/mypage"
         android:title="내 계정"
-        android:icon="@drawable/newusericon"/>
+        android:icon="@drawable/user"/>
     
 </menu>
