@@ -18,7 +18,7 @@
         </activity>
 
         <activity
-            android:name=".ManagerTableActivity"
+            android:name=".ManagerActivity"
             android:exported="false" />
         <activity
             android:name=".ManagerBoothPasswordDialogActivity"
