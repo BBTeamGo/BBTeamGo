@@ -1,3 +1,4 @@
+
 package com.example.bbteamgo;
 
 public class BookingManagementData {
@@ -36,5 +37,6 @@ public class BookingManagementData {
         this.elapsedTime = elapsedTime;
     }
 }
+
 // elapsed time의 타입 형태는 나중에 타이머를 넣을 때 바꾸고 일단 스트링으로 썼음
 // booking management page 액티비티에 있는 리사이클러뷰의 리스트 하나에 포함되어야 하는 데이터의 종류들

@@ -5,8 +5,8 @@
     android:layout_height="120dp"
     android:orientation="vertical"
     android:background="@drawable/booking_management_list_background"
-    android:elevation="30dp"
-    android:layout_margin="30dp"
+    android:elevation="20dp"
+    android:layout_margin="20dp"
     >
 
     <LinearLayout
