@@ -20,7 +20,7 @@
             android:name=".BookingManagementPageActivity"
             android:exported="true"></activity>
         <activity
-            android:name=".ManagerTableActivity"
+            android:name=".ManagerActivity"
             android:exported="false" />
         <activity
             android:name=".ManagerBoothPasswordDialogActivity"
@@ -47,7 +47,7 @@
             android:name=".CustomerLoginActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginChoiceActivity"
+            android:name=".InitialScreenFragment"
             android:exported="false" />
         <activity
             android:name=".MyReservationActivity"
