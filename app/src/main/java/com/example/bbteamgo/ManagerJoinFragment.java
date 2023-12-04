@@ -13,10 +13,10 @@ import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CustomerJoinFragment#newInstance} factory method to
+ * Use the {@link ManagerJoinFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CustomerJoinFragment extends Fragment {
+public class ManagerJoinFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,7 +27,7 @@ public class CustomerJoinFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public CustomerJoinFragment() {
+    public ManagerJoinFragment() {
         // Required empty public constructor
     }
 
@@ -37,11 +37,11 @@ public class CustomerJoinFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CustomerJoinFragment.
+     * @return A new instance of fragment ManagerJoinFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CustomerJoinFragment newInstance(String param1, String param2) {
-        CustomerJoinFragment fragment = new CustomerJoinFragment();
+    public static ManagerJoinFragment newInstance(String param1, String param2) {
+        ManagerJoinFragment fragment = new ManagerJoinFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,7 +62,7 @@ public class CustomerJoinFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customer_join, container, false);
+        return inflater.inflate(R.layout.fragment_manager_join, container, false);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class CustomerJoinFragment extends Fragment {
             public void onClick(View v) {
                 getParentFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container_view_tag, CustomerLoginFragment.newInstance("param1", "param2"))
+                        .replace(R.id.fragment_container_view_tag, ManagerLoginFragment.newInstance("param1", "param2"))
                         .commit();
             }
         });

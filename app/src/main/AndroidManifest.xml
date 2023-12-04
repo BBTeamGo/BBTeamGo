@@ -29,15 +29,6 @@
             android:name=".ManagerStartActivity"
             android:exported="false" />
         <activity
-            android:name=".FindPasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ManagerJoinActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ManagerLoginActivity"
-            android:exported="false" />
-        <activity
             android:name=".MyReservationActivity"
             android:exported="true">
             <intent-filter>
