@@ -17,6 +17,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListViewHolder> 
 
     List<OrderListData> data;
 
+
     public OrderListAdapter(List<OrderListData> data) {
         this.data = data;
     }
