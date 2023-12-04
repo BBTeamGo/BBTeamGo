@@ -18,7 +18,7 @@
             android:exported="true" />
         <activity
             android:name=".BookingManagementPageActivity"
-            android:exported="true"></activity>
+            android:exported="true"/>
         <activity
             android:name=".ManagerActivity"
             android:exported="false" />
@@ -29,25 +29,13 @@
             android:name=".ManagerStartActivity"
             android:exported="false" />
         <activity
-            android:name=".EnterNewPasswordActivity"
-            android:exported="false" />
-        <activity
             android:name=".FindPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".ManagerJoinActivity"
             android:exported="false" />
         <activity
-            android:name=".CustomerJoinActivity"
-            android:exported="false" />
-        <activity
             android:name=".ManagerLoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CustomerLoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".InitialScreenFragment"
             android:exported="false" />
         <activity
             android:name=".MyReservationActivity"
