@@ -45,5 +45,8 @@
     <style name="nameCard">
         <item name="android:background">@drawable/name_card</item>
     </style>
+    <style name="cancelButton">
+        <item name="android:background">@drawable/cancel_button</item>
+    </style>
 
 </resources>

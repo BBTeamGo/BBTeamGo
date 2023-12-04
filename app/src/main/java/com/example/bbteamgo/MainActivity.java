@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         userAuth = FirebaseAuth.getInstance();
@@ -43,5 +44,6 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.fragment_container_view_tag, InitialScreenFragment.newInstance());
             fragmentTransaction.commit();
         }
+
     }
 }

@@ -1,8 +1,13 @@
 plugins {
     id("com.android.application")
 
+
+
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+
+
 }
 
 android {
@@ -38,6 +43,19 @@ android {
 }
 
 dependencies {
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+
+
+    // TODO: Add the dependencies for Firebase products you want to use
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation("com.google.firebase:firebase-analytics")
+
+    //maps
+
+    implementation ("com.google.android.gms:play-services-maps:18.2.0")
+
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
 
     //for circle imageview
     implementation ("de.hdodenhof:circleimageview:3.1.0")
