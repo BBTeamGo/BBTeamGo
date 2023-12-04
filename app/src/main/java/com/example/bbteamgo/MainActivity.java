@@ -1,17 +1,29 @@
 package com.example.bbteamgo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "EmailPassword";
+
     private FirebaseAuth userAuth;
+    private FirebaseFirestore database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         userAuth = FirebaseAuth.getInstance();
+        database = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -33,10 +46,35 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = userAuth.getCurrentUser();
 
         if (currentUser != null) {
-            Intent intent = new Intent(this, ManagerActivity.class);
+            DocumentReference user = database.collection("User").document(currentUser.getUid());
+            final Class[] targetActivity = {null};
+            user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Map<String, Object> data = document.getData();
+
+                            if ((boolean) data.get("is_customer")) {
+                                targetActivity[0] = CustomerActivity.class;
+                            }
+                            else if ((boolean) data.get("is_manager")) {
+                                targetActivity[0] = ManagerActivity.class;
+                            }
+
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+            });
+
+            Intent intent = new Intent(this, targetActivity[0]);
             intent.putExtra("USER_PROFILE", "email: " + currentUser.getEmail() + "\n" + "uid: " + currentUser.getUid());
 
-            // 관리자냐 소비자냐인지 알기 위해 쿼리해서 액티비티 전환
             startActivity(intent);
         }
         else {
