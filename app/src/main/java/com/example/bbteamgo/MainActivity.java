@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container_view_tag, InitialScreenFragment.newInstance());
+            fragmentTransaction.replace(R.id.fragment_container_view_tag, InitialScreenFragment.newInstance("param1", "param2"));
             fragmentTransaction.commit();
         }
 
