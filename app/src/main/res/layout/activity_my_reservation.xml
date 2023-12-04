@@ -27,6 +27,7 @@
             tools:listitem="@layout/reservation_item_view" />
 
         <Button
+            android:id="@+id/moreReservation"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="+     더 예약하기"

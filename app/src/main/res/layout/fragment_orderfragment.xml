@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/ReservationBox_cml"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="주문하기"
+        android:textSize="25dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/notAllow"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="아직 입장하지           않으셨어요"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="입장이 확인되면 메뉴를 알려드려요."
+            android:textSize="20dp"
+            android:layout_below="@+id/notAllow"
+            android:layout_marginStart="60dp"
+            />
+
+    </RelativeLayout>
+</LinearLayout>
