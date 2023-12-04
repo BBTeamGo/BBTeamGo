@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home_botton"
+        android:id="@+id/home_btn"
         android:title="홈"
         android:icon="@drawable/home"
         />
     <item
-        android:id="@+id/reservation_botton"
+        android:id="@+id/reservation_button"
         android:title="내 예약"
         android:icon="@drawable/reservation"
         />
     <item
-        android:id="@+id/my_order_botton"
+        android:id="@+id/my_order_button"
         android:title="내 주문"
         android:icon="@drawable/order"/>
     <item
