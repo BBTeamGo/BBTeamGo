@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         checkLogin();
     }
 
-    public void checkLogin() {
+    private void checkLogin() {
         FirebaseUser currentUser = userAuth.getCurrentUser();
 
         if (currentUser != null) {
