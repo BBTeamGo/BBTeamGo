@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp">
+
+        <ImageView
+
+            android:layout_centerHorizontal="true"
+            android:id="@+id/boothImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/festival_test_image" />
+
+        <LinearLayout
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/boothImage"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IT대학 소모임"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="숭실대학교 IT대학 소모임 연합 주점" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp">
+
+            <TextView
+                android:id="@+id/waitingPerson"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="대기 인원" />
+
+
+                <TextView
+                    android:id="@+id/waitingTime"
+                    android:layout_marginStart="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/waitingPerson"
+                    android:text="예상 대기 시간" />
+
+                <TextView
+                    android:layout_below="@+id/waitingPerson"
+                    android:id="@+id/waitingPersonCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="2명" />
+
+                <TextView
+                    android:id="@+id/waitingTimeCount"
+                    android:layout_below="@+id/waitingTime"
+                    android:layout_toRightOf="@id/waitingPersonCount"
+                    android:layout_marginStart="80dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5분" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/reservationBtn"
+                style="@style/ButtonStyle"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="27dp"
+                android:text="예약" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
