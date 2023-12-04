@@ -1,15 +1,30 @@
 package com.example.bbteamgo;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,6 +32,8 @@ import android.widget.Button;
  * create an instance of this fragment.
  */
 public class ManagerLoginFragment extends Fragment {
+
+    private static final String TAG = "EmailPassword";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +43,9 @@ public class ManagerLoginFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private FirebaseAuth userAuth;
+    private FirebaseFirestore database;
 
     public ManagerLoginFragment() {
         // Required empty public constructor
@@ -56,6 +76,9 @@ public class ManagerLoginFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        userAuth = FirebaseAuth.getInstance();
+        database = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -80,11 +103,19 @@ public class ManagerLoginFragment extends Fragment {
             }
         });
 
+        EditText emailEditText = view.findViewById(R.id.email_textbox);
+        EditText passwordEditText = view.findViewById(R.id.password_textbox);
+
         Button loginButton = view.findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /** 로그인 코드 */
+
+                String email = emailEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
+
+                signIn(email, password);
             }
         });
 
@@ -109,5 +140,55 @@ public class ManagerLoginFragment extends Fragment {
                         .commit();
             }
         });
+    }
+
+    private void signIn(String email, String password) {
+        DocumentReference user = database.collection("User").document(userAuth.getUid());
+        final boolean[] isCustomerAccount = {false};
+        user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Map<String, Object> data = document.getData();
+
+                        if ((boolean) data.get("is_manager")) {
+                            isCustomerAccount[0] = true;
+                        }
+
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+        userAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful() && isCustomerAccount[0]) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = userAuth.getCurrentUser();
+
+                            Intent intent = new Intent(getActivity(), CustomerActivity.class);
+                            intent.putExtra("USER_PROFILE", "email: " + user.getEmail() + "\n" + "uid: " + user.getUid());
+
+                            startActivity(intent);
+                        } else if (task.isSuccessful() && !isCustomerAccount[0]) {
+                            Toast.makeText(getActivity(), "부스 관리자로 가입한 계정이 아닙니다.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(getActivity(), "로그인에 실패하였습니다",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

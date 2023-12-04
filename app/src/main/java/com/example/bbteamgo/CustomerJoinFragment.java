@@ -12,13 +12,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +49,7 @@ public class CustomerJoinFragment extends Fragment {
     private String mParam2;
 
     private FirebaseAuth userAuth;
+    private FirebaseFirestore database;
 
     public CustomerJoinFragment() {
         // Required empty public constructor
@@ -71,6 +82,7 @@ public class CustomerJoinFragment extends Fragment {
         }
 
         userAuth = FirebaseAuth.getInstance();
+        database = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -95,11 +107,18 @@ public class CustomerJoinFragment extends Fragment {
             }
         });
 
+        EditText emailEditText = view.findViewById(R.id.email_textbox);
+        EditText passwordEditText = view.findViewById(R.id.password_textbox);
+
         Button joinButton = view.findViewById(R.id.join_button);
         joinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /** 회원가입하는 코드 작성 */
+                /** 회원가입 코드 */
+                String email = emailEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
+
+                signUp(email, password);
             }
         });
     }
@@ -114,6 +133,8 @@ public class CustomerJoinFragment extends Fragment {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = userAuth.getCurrentUser();
 
+                            changeAccountCunstomer(user.getUid().toString());
+
                             /** CusotmerActiviy에 user 인스턴스에 있는 정보들을 넘겨주어야 함 */
                             Intent intent = new Intent(getActivity(), CustomerActivity.class);
                             intent.putExtra("USER_PROFILE", "email: " + user.getEmail() + "\n" + "uid: " + user.getUid());
@@ -127,5 +148,37 @@ public class CustomerJoinFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    private void changeAccountCunstomer(String userId) {
+        DocumentReference user = database.collection("User").document(userId);
+        user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        user.update("is_manager", true).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error updating document", e);
+                                    }
+                                });
+                    } else {
+                        Map<String, Object> data = new HashMap<>();
+                        data.put("is_manager", true);
+                        user.set(data);
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
     }
 }

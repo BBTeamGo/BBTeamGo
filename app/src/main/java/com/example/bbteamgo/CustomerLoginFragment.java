@@ -20,6 +20,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +45,7 @@ public class CustomerLoginFragment extends Fragment {
     private String mParam2;
 
     private FirebaseAuth userAuth;
+    private FirebaseFirestore database;
 
     public CustomerLoginFragment() {
         // Required empty public constructor
@@ -72,6 +78,7 @@ public class CustomerLoginFragment extends Fragment {
         }
 
         userAuth = FirebaseAuth.getInstance();
+        database = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -135,11 +142,34 @@ public class CustomerLoginFragment extends Fragment {
     }
 
     private void signIn(String email, String password) {
+        DocumentReference user = database.collection("User").document(userAuth.getUid());
+        final boolean[] isCustomerAccount = {false};
+        user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Map<String, Object> data = document.getData();
+
+                        if ((boolean) data.get("is_customer")) {
+                            isCustomerAccount[0] = true;
+                        }
+
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
         userAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful() && isCustomerAccount[0]) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = userAuth.getCurrentUser();
@@ -148,14 +178,16 @@ public class CustomerLoginFragment extends Fragment {
                             intent.putExtra("USER_PROFILE", "email: " + user.getEmail() + "\n" + "uid: " + user.getUid());
 
                             startActivity(intent);
+                        } else if (task.isSuccessful() && !isCustomerAccount[0]) {
+                            Toast.makeText(getActivity(), "손님으로 가입한 계정이 아닙니다.",
+                                    Toast.LENGTH_SHORT).show();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(getActivity(), "Authentication failed.",
+                            Toast.makeText(getActivity(), "로그인에 실패하였습니다",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
     }
 }
