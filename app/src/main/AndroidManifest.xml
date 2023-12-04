@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,38 +13,14 @@
         android:theme="@style/Theme.BBTeamGo"
         tools:targetApi="33">
         <activity
-            android:name=".OrderListActivity"
-            android:exported="true" />
-        <activity
-            android:name=".BookingManagementPageActivity"
-            android:exported="true"/>
+            android:name=".CustomerActivity"
+            android:exported="false" />
         <activity
             android:name=".ManagerActivity"
             android:exported="false" />
         <activity
-            android:name=".ManagerBoothPasswordDialogActivity"
+            android:name=".ManagerSelectBoothActivity"
             android:exported="false" />
-        <activity
-            android:name=".ManagerStartActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MyReservationActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".CustomerPageActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">

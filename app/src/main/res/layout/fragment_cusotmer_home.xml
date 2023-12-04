@@ -8,9 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="900px"
-
-        >
+        android:layout_height="900px" >
 
         <EditText
             android:id="@+id/search_festival"
@@ -18,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="24dp"
             android:hint="Search"
             android:padding="18dp"
             android:paddingEnd="260dp"
@@ -46,19 +44,5 @@
             >
         </ListView>
     </LinearLayout>
-
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="#FBFBFB"
-        android:elevation="100dp"
-        app:itemIconSize="@dimen/bottom_navigation_icon_size"
-        app:itemIconTint="@drawable/menu_item_color"
-        app:itemTextColor="@drawable/menu_item_color"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/main_menu_bottom" />
 
 </LinearLayout>
