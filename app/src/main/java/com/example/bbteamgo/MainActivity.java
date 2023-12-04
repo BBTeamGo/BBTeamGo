@@ -1,6 +1,7 @@
 package com.example.bbteamgo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else {
-
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container_view_tag, InitialScreenFragment.newInstance());
+            fragmentTransaction.commit();
         }
     }
 }
