@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="table_number">
+        <item>1-1</item>
+        <item>1-2</item>
+        <item>2-1</item>
+        <item>2-2</item>
+        <item>3-1</item>
+        <item>3-2</item>
+        <item>4-1</item>
+        <item>4-2</item>
+    </string-array>
+
+    <string-array name="menu_list">
+        <item>순대볶음</item>
+        <item>족발</item>
+        <item>오뎅탕</item>
+        <item>햄버거</item>
+        <item>피자</item>
+        <item>소주</item>
+
+    </string-array>
+</resources>

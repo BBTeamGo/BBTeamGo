@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid
-        android:color="#FFFFFF">
-    </solid>
+
     <corners
         android:radius="20dp">
-
     </corners>
-
+    <solid android:color="@color/white"></solid>
 </shape>
-
-
-<!--리사이클러뷰에 쓰이는 리스트용 background-->

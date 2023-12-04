@@ -9,4 +9,5 @@
     <color name="transparent">#00FF0000</color>
     <color name="blue">#FFA2CBF0</color>
     <color name="deep_blue">#FF4488C8</color>
+    <color name="red">#FF0000</color>
 </resources>

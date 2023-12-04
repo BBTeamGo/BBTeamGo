@@ -1,25 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@drawable/bottom_rounded_background"
-        android:text="예약 관리"
+        android:text="주문 내역"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/booking_management_recyclerview"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="@integer/material_motion_duration_long_1">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/order_list_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/add_order_button"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="+ 주문 추가"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/add_order_button_background_in_order_list"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            >
+        </Button>
+
+
+
+    </FrameLayout>
 
 
 

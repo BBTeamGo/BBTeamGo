@@ -3,10 +3,20 @@ package com.example.bbteamgo;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class BookingManagmentViewHolder extends RecyclerView.ViewHolder {
+import com.example.bbteamgo.databinding.BookingManagementItemViewBinding;
 
+public class BookingManagmentViewHolder extends RecyclerView.ViewHolder {
+    public BookingManagementItemViewBinding binding;
+    public BookingManagmentViewHolder(BookingManagementItemViewBinding binding) {
+        super(binding.getRoot());
+        this.binding = binding;
+    }
+
+
+/*
     TextView bookingOrder, bookerName, elapsedTime;
 
     public BookingManagmentViewHolder(View itemView){
@@ -16,6 +26,7 @@ public class BookingManagmentViewHolder extends RecyclerView.ViewHolder {
         elapsedTime = itemView.findViewById(R.id.elapsed_time);
 
     }
+ */
 }
 
 
