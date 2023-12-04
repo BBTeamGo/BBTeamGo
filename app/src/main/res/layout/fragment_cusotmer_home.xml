@@ -9,20 +9,21 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="900px" >
 
-        <RelativeLayout
-            android:id="@+id/mapLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".MapsFragment" />
+        <EditText
+            android:id="@+id/search_festival"
+            style="@style/SearchFestival_cmh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:hint="Search"
+            android:padding="18dp"
+            android:paddingEnd="260dp"
+            android:paddingBottom="15dp"
+            android:textSize="20dp" />
+    </RelativeLayout>
 
             <!--            <EditText-->
             <!--                android:id="@+id/search_festival"-->
@@ -80,13 +81,16 @@
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="#FBFBFB"
-            android:elevation="100dp"
-            app:itemIconSize="@dimen/bottom_navigation_icon_size"
-            app:itemIconTint="@drawable/menu_item_color"
-            app:itemTextColor="@drawable/menu_item_color"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/main_menu_bottom" />
-    </FrameLayout>
+            android:text="진행 중인 근처의 축제"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"/>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </ListView>
+    </LinearLayout>
+
 </LinearLayout>

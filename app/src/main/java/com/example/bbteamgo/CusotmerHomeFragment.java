@@ -2,21 +2,18 @@ package com.example.bbteamgo;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CustomerJoinFragment#newInstance} factory method to
+ * Use the {@link CusotmerHomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CustomerJoinFragment extends Fragment {
+public class CusotmerHomeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,7 +24,7 @@ public class CustomerJoinFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public CustomerJoinFragment() {
+    public CusotmerHomeFragment() {
         // Required empty public constructor
     }
 
@@ -37,11 +34,11 @@ public class CustomerJoinFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CustomerJoinFragment.
+     * @return A new instance of fragment CusotmerHomeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CustomerJoinFragment newInstance(String param1, String param2) {
-        CustomerJoinFragment fragment = new CustomerJoinFragment();
+    public static CusotmerHomeFragment newInstance(String param1, String param2) {
+        CusotmerHomeFragment fragment = new CusotmerHomeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,30 +59,6 @@ public class CustomerJoinFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customer_join, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        Button backButton = view.findViewById(R.id.back_button);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getParentFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container_view_tag, CustomerLoginFragment.newInstance("param1", "param2"))
-                        .commit();
-            }
-        });
-
-        Button joinButton = view.findViewById(R.id.join_button);
-        joinButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /** 회원가입하는 코드 작성 */
-            }
-        });
+        return inflater.inflate(R.layout.fragment_cusotmer_home, container, false);
     }
 }

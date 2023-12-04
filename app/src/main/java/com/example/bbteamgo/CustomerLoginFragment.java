@@ -2,11 +2,14 @@ package com.example.bbteamgo;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,5 +63,51 @@ public class CustomerLoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_customer_login, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Button backButton = view.findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view_tag, InitialScreenFragment.newInstance("param1", "param2"))
+                        .commit();
+            }
+        });
+
+        Button loginButton = view.findViewById(R.id.login_button);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /** 로그인 코드 */
+            }
+        });
+
+        Button joinButton = view.findViewById(R.id.join_button);
+        joinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view_tag, CustomerJoinFragment.newInstance("param1", "param2"))
+                        .commit();
+            }
+        });
+
+        Button findPasswordButton = view.findViewById(R.id.find_password_button);
+        findPasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view_tag, FindPasswordFragment.newInstance("param1", "param2"))
+                        .commit();
+            }
+        });
     }
 }
