@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +26,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -140,6 +143,19 @@ public class ManagerLoginFragment extends Fragment {
                         .commit();
             }
         });
+
+
+        Spinner universitySpinner = view.findViewById(R.id.university_spinner);
+        ArrayList universityArray = new ArrayList<>();
+        universityArray.add("숭실대학교");
+        universityArray.add("중앙대학교");
+
+        ArrayAdapter<String> arrayAdpater = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                universityArray);
+
+        universitySpinner.setAdapter(arrayAdpater);
+
     }
 
     private void signIn(String email, String password) {

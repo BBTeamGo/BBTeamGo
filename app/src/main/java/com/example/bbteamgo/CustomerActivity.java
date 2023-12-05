@@ -70,4 +70,4 @@ import com.google.android.material.navigation.NavigationBarView;
 
         }
 
-    }
+}

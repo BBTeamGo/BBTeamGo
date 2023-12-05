@@ -19,9 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
-                android:layout_marginTop="70dp"
-                app:orientation="horizontal"
-                app:rowCount="2">
+                android:layout_marginTop="70dp" >
 
 
                 <androidx.recyclerview.widget.RecyclerView
