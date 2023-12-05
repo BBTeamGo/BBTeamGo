@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="160dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:elevation="20dp"
+    android:background="@drawable/booking_management_list_background"
+    android:layout_margin="20dp">
+
+    <ImageView
+        android:id="@+id/menu_image"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:clipToOutline="true"
+
+        android:scaleType="centerCrop"
+        android:background="@drawable/round_image_background"
+>
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/menu_name"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="순대볶음"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/menu_price"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/black"
+
+        android:text="15000원"
+        >
+
+    </TextView>
+
+
+</LinearLayout>
