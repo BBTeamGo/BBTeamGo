@@ -55,34 +55,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void reload(FirebaseUser currentUser) {
-        DocumentReference user = database.collection("User").document(currentUser.getUid());
-        final String[] lastLoginMode = {null};
+        Boolean isFastLogin = false, isManagerLogin = false;
 
-        user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                Log.d(TAG, "check2");
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Map<String, Object> data = document.getData();
-
-                        lastLoginMode[0] = data.get("last_login_mode").toString();
-                    } else {
-                        Log.d(TAG, "No such document");
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
-
-        if (lastLoginMode[0] != null) {
+        if (isFastLogin) {
             Intent intent = null;
-            if (Objects.equals(lastLoginMode[0], "Manager"))
-                intent = new Intent(this, ManagerActivity.class);
-            else if (Objects.equals(lastLoginMode[0], "Customer"))
+            if (isManagerLogin)
+                intent = new Intent(this, ManagerSelectBoothActivity.class);
+            else if (!isManagerLogin)
                 intent = new Intent(this, CustomerActivity.class);
+
+            Log.d(TAG, "FastLogin2");
             intent.putExtra("USER_PROFILE", "email: " + currentUser.getEmail() + "\n" + "uid: " + currentUser.getUid());
             startActivity(intent);
         } else {

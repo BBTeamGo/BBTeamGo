@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,20 +19,16 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -53,6 +50,8 @@ public class ManagerJoinFragment extends Fragment {
     private String mParam2;
 
     ArrayList<String> universityArray;
+    Spinner universitySpinner;
+    String selectedUniversity = "Soongsil";
 
     private FirebaseAuth userAuth;
     private FirebaseFirestore database;
@@ -100,7 +99,7 @@ public class ManagerJoinFragment extends Fragment {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Map<String, Object> data = document.getData();
-                                universityArray.add(data.get("name").toString());
+                                universityArray.add(Objects.requireNonNull(data.get("name")).toString());
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -131,11 +130,8 @@ public class ManagerJoinFragment extends Fragment {
             }
         });
 
-        Spinner universitySpinner = view.findViewById(R.id.university_spinner);
-        ArrayAdapter<String> arrayAdpater = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_dropdown_item,
-                universityArray);
-        universitySpinner.setAdapter(arrayAdpater);
+        universitySpinner = view.findViewById(R.id.university_spinner);
+        InitSpiiner();
 
         EditText emailEditText = view.findViewById(R.id.email_textbox);
         EditText passwordEditText = view.findViewById(R.id.password_textbox);
@@ -144,12 +140,13 @@ public class ManagerJoinFragment extends Fragment {
         joinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onclick");
+
                 /** 회원가입하는 코드 작성 */
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
-                String memberShip = universitySpinner.getSelectedItem().toString();
 
-                signUp(email, password, memberShip);
+                signUp(email, password, selectedUniversity);
             }
         });
     }
@@ -165,10 +162,10 @@ public class ManagerJoinFragment extends Fragment {
                             FirebaseUser user = userAuth.getCurrentUser();
                             DocumentReference userRef = database.collection("User").document(user.getUid().toString());
 
-                            LoginHelper.changeUserMembership(userRef, email, membership);
+                            LoginHelper.updateUserData(userRef, email, membership);
 
                             /** CusotmerActiviy에 user 인스턴스에 있는 정보들을 넘겨주어야 함 */
-                            Intent intent = new Intent(getActivity(), CustomerActivity.class);
+                            Intent intent = new Intent(getActivity(), ManagerSelectBoothActivity.class);
                             intent.putExtra("USER_PROFILE", "email: " + user.getEmail() + "\n" + "uid: " + user.getUid());
 
                             startActivity(intent);
@@ -180,5 +177,26 @@ public class ManagerJoinFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    private void InitSpiiner() {
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                universityArray);
+        arrayAdapter.notifyDataSetChanged();
+        universitySpinner.setAdapter(arrayAdapter);
+
+        universitySpinner.setSelection(0, false);
+        Log.d(TAG, "Spinner Init");
+        universitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedUniversity = universityArray.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 }

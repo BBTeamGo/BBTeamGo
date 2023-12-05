@@ -134,7 +134,7 @@ public class CustomerJoinFragment extends Fragment {
                             FirebaseUser user = userAuth.getCurrentUser();
                             DocumentReference userRef = database.collection("User").document(user.getUid().toString());
 
-                            LoginHelper.changeUserMembership(userRef, email,null);
+                            LoginHelper.updateUserData(userRef, email, null);
 
                             /** CusotmerActiviy에 user 인스턴스에 있는 정보들을 넘겨주어야 함 */
                             Intent intent = new Intent(getActivity(), CustomerActivity.class);
