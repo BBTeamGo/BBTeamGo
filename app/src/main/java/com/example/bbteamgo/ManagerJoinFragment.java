@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,9 +27,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +51,8 @@ public class ManagerJoinFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    ArrayList<String> universityArray;
 
     private FirebaseAuth userAuth;
     private FirebaseFirestore database;
@@ -81,6 +89,24 @@ public class ManagerJoinFragment extends Fragment {
 
         userAuth = FirebaseAuth.getInstance();
         database = FirebaseFirestore.getInstance();
+
+        universityArray = new ArrayList<>();
+
+        database.collection("University")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> data = document.getData();
+                                universityArray.add(data.get("name").toString());
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 
     @Override
@@ -105,6 +131,12 @@ public class ManagerJoinFragment extends Fragment {
             }
         });
 
+        Spinner universitySpinner = view.findViewById(R.id.university_spinner);
+        ArrayAdapter<String> arrayAdpater = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                universityArray);
+        universitySpinner.setAdapter(arrayAdpater);
+
         EditText emailEditText = view.findViewById(R.id.email_textbox);
         EditText passwordEditText = view.findViewById(R.id.password_textbox);
 
@@ -115,13 +147,14 @@ public class ManagerJoinFragment extends Fragment {
                 /** 회원가입하는 코드 작성 */
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
+                String memberShip = universitySpinner.getSelectedItem().toString();
 
-                signUp(email, password);
+                signUp(email, password, memberShip);
             }
         });
     }
 
-    private void signUp(String email, String password) {
+    private void signUp(String email, String password, String membership) {
         userAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
@@ -130,8 +163,9 @@ public class ManagerJoinFragment extends Fragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = userAuth.getCurrentUser();
+                            DocumentReference userRef = database.collection("User").document(user.getUid().toString());
 
-                            changeAccountManager(user.getUid().toString());
+                            LoginHelper.changeUserMembership(userRef, membership);
 
                             /** CusotmerActiviy에 user 인스턴스에 있는 정보들을 넘겨주어야 함 */
                             Intent intent = new Intent(getActivity(), CustomerActivity.class);
@@ -146,37 +180,5 @@ public class ManagerJoinFragment extends Fragment {
                         }
                     }
                 });
-    }
-
-    private void changeAccountManager(String userId) {
-        DocumentReference user = database.collection("User").document(userId);
-        user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        user.update("is_manager", true).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "DocumentSnapshot successfully updated!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error updating document", e);
-                                    }
-                                });
-                    } else {
-                        Map<String, Object> data = new HashMap<>();
-                        data.put("is_manager", true);
-                        user.set(data);
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
     }
 }

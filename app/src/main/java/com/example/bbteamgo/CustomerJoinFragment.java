@@ -132,8 +132,9 @@ public class CustomerJoinFragment extends Fragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = userAuth.getCurrentUser();
+                            DocumentReference userRef = database.collection("User").document(user.getUid().toString());
 
-                            changeAccountCunstomer(user.getUid().toString());
+                            LoginHelper.changeUserMembership(userRef, null);
 
                             /** CusotmerActiviy에 user 인스턴스에 있는 정보들을 넘겨주어야 함 */
                             Intent intent = new Intent(getActivity(), CustomerActivity.class);
@@ -148,37 +149,5 @@ public class CustomerJoinFragment extends Fragment {
                         }
                     }
                 });
-    }
-
-    private void changeAccountCunstomer(String userId) {
-        DocumentReference user = database.collection("User").document(userId);
-        user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        user.update("is_manager", true).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "DocumentSnapshot successfully updated!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error updating document", e);
-                                    }
-                                });
-                    } else {
-                        Map<String, Object> data = new HashMap<>();
-                        data.put("is_manager", true);
-                        user.set(data);
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
     }
 }
