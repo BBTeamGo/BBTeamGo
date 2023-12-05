@@ -23,9 +23,6 @@
             android:value="AIzaSyBLJKr0LTFLKy-QAJqeFSIXgHsfd5wLQSM" />
 
         <activity
-            android:name=".OrderScreenActivity"
-            android:exported="true" />
-        <activity
             android:name=".CustomerActivity"
             android:exported="true" />
         <activity
