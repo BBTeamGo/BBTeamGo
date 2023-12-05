@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fullLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/mapLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".MapsFragment" />
+
+            <!--            <EditText-->
+            <!--                android:id="@+id/search_festival"-->
+            <!--                style="@style/SearchFestival_cmh"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_centerHorizontal="true"-->
+            <!--                android:layout_marginTop="23dp"-->
+            <!--                android:hint="Search"-->
+            <!--                android:padding="18dp"-->
+            <!--                android:paddingEnd="260dp"-->
+            <!--                android:paddingBottom="15dp"-->
+            <!--                android:textSize="20dp" />-->
+
+            <SearchView
+                android:id="@+id/searchView"
+                style="@style/SearchFestival_cmh"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="23dp"
+                android:iconifiedByDefault="false"
+                android:queryHint="Search" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginTop="300dp"
+            android:layout_weight="1"
+            android:background="@drawable/listteme"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="110dp"
+                android:text="진행 중인 근처의 축제"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <fragment
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/festival_item_view" />
+            </fragment>
+
+        </LinearLayout>
+
+    </FrameLayout>
+</LinearLayout>
