@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
 
-        checkLogin();
+        //checkLogin();
     }
 
     private void checkLogin() {

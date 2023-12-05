@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.bbteamgo.databinding.ActivityMyProfileBinding;
-
 public class CustomerActivity extends AppCompatActivity {
 
     @Override
