@@ -29,6 +29,7 @@ public class ManagerSelectBoothActivity extends AppCompatActivity {
 
     List<BoothItem> booths = new ArrayList<>();
     String userid = null;
+    String userMembership = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,54 +37,8 @@ public class ManagerSelectBoothActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manager_select_booth);
 
         database = FirebaseFirestore.getInstance();
+
         getUserId();
-
-        final String[] userMembership = {""};
-        database.collection("User").document(userid)
-                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                Map<String, Object> data = document.getData();
-                                userMembership[0] = data.get("membership").toString();
-                            } else {
-                                Log.d(TAG, "No such document");
-                            }
-                        } else {
-                            Log.d(TAG, "get failed with ", task.getException());
-                        }
-
-                    }
-                });
-
-
-
-        database.collection("University").document(userMembership[0]).collection("Booth")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Map<String, Object> data = document.getData();
-                                String pictureURL = Objects.requireNonNull(data.get("picture_url")).toString();
-                                String title = Objects.requireNonNull(data.get("name")).toString();
-                                String explainText = Objects.requireNonNull(data.get("explain_text")).toString();
-                                int currentTable = (int)data.get("current_table");
-                                int maxTable = (int)data.get("max_table");
-                                booths.add(new BoothItem(pictureURL, title, explainText, maxTable, currentTable));
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new BoothAdapter(getApplicationContext(), booths));
     }
 
     private void getUserId() {
@@ -96,6 +51,67 @@ public class ManagerSelectBoothActivity extends AppCompatActivity {
             userid = uidPart.split(": ")[1]; // emailPart를 ": "으로 분리하여 email 정보만 추출
         }
 
+        Log.d(TAG, "UserId:" + userid);
+        getUserMembership();
         return;
+    }
+
+    private void getUserMembership() {
+        database.collection("User").document(userid)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Map<String, Object> data = document.getData();
+                                userMembership = data.get("membership").toString();
+                                makeBoothArray();
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+
+                    }
+                });
+    }
+
+    private void makeBoothArray() {
+        database.collection("University")
+                .document("Soongsil")
+                .collection("Booth")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> data = document.getData();
+
+                                String pictureURL = Objects.requireNonNull(data.get("picture_url")).toString();
+                                String title = Objects.requireNonNull(data.get("name")).toString();
+                                String explainText = Objects.requireNonNull(data.get("explain_text")).toString();
+
+                                Log.d(TAG, "Get data Success");
+                                booths.add(new BoothItem(pictureURL, title, explainText));
+                            }
+
+                            makeRecyclerView();
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    private void makeRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new BoothAdapter(getApplicationContext(), booths));
+
+        Log.d(TAG, "RecyclerView End");
     }
 }

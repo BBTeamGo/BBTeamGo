@@ -152,7 +152,7 @@ public class CustomerLoginFragment extends Fragment {
                             FirebaseUser user = userAuth.getCurrentUser();
 
                             Intent intent = new Intent(getActivity(), CustomerActivity.class);
-                            intent.putExtra("USER_PROFILE", "email: " + user.getEmail() + "\n" + "uid: " + user.getUid());
+                            intent.putExtra("USER_PROFILE", "email: " + email + "\n" + "uid: " + user.getUid());
 
                             startActivity(intent);
                         } else {

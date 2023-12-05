@@ -32,8 +32,6 @@ public class BoothAdapter extends RecyclerView.Adapter<BoothViewHolder> {
 //        holder.picture.setImageResource(booths.get(position).getPicture());
         holder.title.setText(booths.get(position).getTitle());
         holder.explainText.setText(booths.get(position).getExplainText());
-        String customerNumString = booths.get(position).getCurrentCustomerNum() + "/" + booths.get(position).getMaxCustomerNum() + "명";
-        holder.customerNumText.setText(customerNumString);
     }
 
     @Override

@@ -27,7 +27,6 @@ import com.google.android.material.navigation.NavigationBarView;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_customer);
             binding = ActivityCustomerBinding.inflate(getLayoutInflater());
             setContentView(binding.getRoot());
 
