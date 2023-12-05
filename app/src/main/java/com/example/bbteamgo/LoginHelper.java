@@ -30,7 +30,7 @@ public class LoginHelper {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        updateUserAccount(user, email, membership);
+                        updateUserMembership(user, membership);
                     } else {
                         createUserAccount(user, email, membership);
                     }
@@ -48,7 +48,7 @@ public class LoginHelper {
         user.set(data);
     }
 
-    public static void updateUserAccount(DocumentReference user, String membership) {
+    public static void updateUserMembership(DocumentReference user, String membership) {
         user.update("membership", membership).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
