@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.viewmodel.CreationExtras;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -211,7 +212,15 @@ public class CusotmerHomeFragment extends Fragment {
         }
     }
 
+    private void addGoogleMapFragment() {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
+        GoogleMapFragment googleMapFragment = new GoogleMapFragment();
+        fragmentTransaction.replace(R.id.map, googleMapFragment);
+        fragmentTransaction.addToBackStack(null); // 백 스택에 추가하면 뒤로 가기 버튼으로 Fragment를 제거할 수 있음
+        fragmentTransaction.commit();
+    }
 
 
 
