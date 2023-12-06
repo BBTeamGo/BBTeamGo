@@ -37,7 +37,7 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
         this.googleMap = googleMap;
 
         // 지도 초기 설정
-        LatLng defaultLocation = new LatLng(37.7749, -122.4194); // 샌프란시스코의 좌표
+        LatLng defaultLocation = new LatLng( 37.2946, 126.5726); // 숭실대학교 좌표
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 15));
 
         // 마커 추가
