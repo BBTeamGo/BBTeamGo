@@ -1,6 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/menu_bullet_point"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bullet_point">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/shopping_cart_menu_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="menu name"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="5dp"
+        android:layout_toRightOf="@+id/menu_bullet_point"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/menu_multiply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x"
+        android:layout_toRightOf="@id/shopping_cart_menu_list"
+        android:layout_marginStart="5dp"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        ></TextView>
+
+    <TextView
+        android:id="@+id/menu_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="number"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@id/menu_multiply"
+        android:layout_marginStart="5dp"
+        >
+
+    </TextView>
+
+    <ImageButton
+        android:id="@+id/menu_minus_btn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/shopping_cart_list_minus_btn"
+        android:background="@color/transparent"
+        android:scaleType="centerCrop">
+
+    </ImageButton>
+
+    <ImageButton
+        android:id="@+id/menu_plus_btn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_toLeftOf="@id/menu_minus_btn"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/shopping_cart_list_plus_btn"
+        android:background="@color/transparent"
+        android:scaleType="centerCrop">
+
+    </ImageButton>
+
+
+
+
+</RelativeLayout>

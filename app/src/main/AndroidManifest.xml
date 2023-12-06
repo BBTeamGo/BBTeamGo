@@ -27,7 +27,7 @@
             android:exported="true" />
         <activity
             android:name=".ManagerActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ManagerSelectBoothActivity"
             android:exported="false" />

@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.viewmodel.CreationExtras;
 
 import android.view.LayoutInflater;
@@ -79,7 +80,9 @@ public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cusotmer_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_cusotmer_home, container, false);
+        searchView = view.findViewById(R.id.searchView);
+        return view;
     }
 
     @Override
@@ -87,7 +90,7 @@ public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback
         super.onViewCreated(view, savedInstanceState);
 
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         searchView = searchView.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -119,10 +122,10 @@ public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
-    private FragmentManager getSupportFragmentManager() {
-        return null;
-    }
 
+
+
+    @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         LatLng SEOUL = new LatLng(37.56, 126.97);

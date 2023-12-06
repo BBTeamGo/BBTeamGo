@@ -1,14 +1,25 @@
 package com.example.bbteamgo;
 
+import static androidx.appcompat.content.res.AppCompatResources.getDrawable;
+
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+
+import com.example.bbteamgo.databinding.FragmentManagerOrderlistBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +36,10 @@ public class ManagerOrderlistFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    FragmentManagerOrderlistBinding binding;
+    private ImageButton btnDialogCancel;
+    private  Dialog dialog;
 
     public ManagerOrderlistFragment() {
         // Required empty public constructor
@@ -58,55 +73,83 @@ public class ManagerOrderlistFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_manager_orderlist, container, false);
+        binding = FragmentManagerOrderlistBinding.inflate(inflater,container,false);
+        return binding.getRoot();
+        //return inflater.inflate(R.layout.fragment_manager_orderlist, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        List<OrderListData> data = new ArrayList<>();
+        data.add(new OrderListData("1-2", "1-2번 테이블", "주문경과 시간: 30분 28초", "순대볶음", "오뎅탕", "소주", 16000, 15000, 4500, 55000, false));
+        data.add(new OrderListData("2-2", "2-2번 테이블", "주문경과 시간: 12분 28초", "퀘사디아", "오뎅탕", "맥주", 10000, 15000, 4000, 29000, false));
+
+
+        binding.orderListRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.orderListRecyclerview.setAdapter(new OrderListAdapter(data));
+
+        dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.dialog_order_box);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.dialog_box_background));
+
+        btnDialogCancel = dialog.findViewById(R.id.cancel_btn);
+
+        btnDialogCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        binding.addOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();}
+        });
 
     }
 
-    /**
-     * Dialog dialog;
-     *     ImageButton btnDialogCancel;
-     *     @Override
-     *     protected void onCreate(Bundle savedInstanceState) {
-     *         super.onCreate(savedInstanceState);
-     *         ActivityOrderListBinding binding = ActivityOrderListBinding.inflate(getLayoutInflater());
-     *         setContentView(binding.getRoot());
-     *
-     *         List<OrderListData> data = new ArrayList<>();
-     *         data.add(new OrderListData("1-2", "1-2번 테이블", "주문경과 시간: 30분 28초", "순대볶음", "오뎅탕", "소주", 16000, 15000, 4500, 55000, false));
-     *         data.add(new OrderListData("2-2", "2-2번 테이블", "주문경과 시간: 12분 28초", "퀘사디아", "오뎅탕", "맥주", 10000, 15000, 4000, 29000, false));
-     *
-     *
-     *         binding.orderListRecyclerview.setLayoutManager(new LinearLayoutManager(this));
-     *         binding.orderListRecyclerview.setAdapter(new OrderListAdapter(data));
-     *
-     *         binding.addOrderButton.setOnClickListener(new View.OnClickListener() {
-     *             @Override
-     *             public void onClick(View v) {
-     *                 dialog.show();
-     *             }
-     *         });
-     *
-     *
-     *         dialog = new Dialog(OrderListActivity.this);
-     *         dialog.setContentView(R.layout.add_order_dialog_box);
-     *         btnDialogCancel =dialog.findViewById(R.id.cancel_btn);
-     *         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-     *         dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_box_background));
-     *         dialog.setCancelable(false);
-     *
-     *         btnDialogCancel.setOnClickListener(view ->{
-     *                 dialog.dismiss();
-     *             }
-     *         );
-     *     }
-     */
 }
+
+/**
+ * Dialog dialog;
+ * ImageButton btnDialogCancel;
+ *
+ * @Override protected void onCreate(Bundle savedInstanceState) {
+ * super.onCreate(savedInstanceState);
+ * ActivityOrderListBinding binding = ActivityOrderListBinding.inflate(getLayoutInflater());
+ * setContentView(binding.getRoot());
+ * <p>
+ * List<OrderListData> data = new ArrayList<>();
+ * data.add(new OrderListData("1-2", "1-2번 테이블", "주문경과 시간: 30분 28초", "순대볶음", "오뎅탕", "소주", 16000, 15000, 4500, 55000, false));
+ * data.add(new OrderListData("2-2", "2-2번 테이블", "주문경과 시간: 12분 28초", "퀘사디아", "오뎅탕", "맥주", 10000, 15000, 4000, 29000, false));
+ * <p>
+ * <p>
+ * binding.orderListRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+ * binding.orderListRecyclerview.setAdapter(new OrderListAdapter(data));
+ * <p>
+ * binding.addOrderButton.setOnClickListener(new View.OnClickListener() {
+ * @Override public void onClick(View v) {
+ * dialog.show();
+ * }
+ * });
+ * <p>
+ * <p>
+ * dialog = new Dialog(OrderListActivity.this);
+ * dialog.setContentView(R.layout.add_order_dialog_box);
+ * btnDialogCancel =dialog.findViewById(R.id.cancel_btn);
+ * dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+ * dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_box_background));
+ * dialog.setCancelable(false);
+ * <p>
+ * btnDialogCancel.setOnClickListener(view ->{
+ * dialog.dismiss();
+ * }
+ * );
+ * }
+ */

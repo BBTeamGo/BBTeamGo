@@ -31,6 +31,7 @@ public class OrderScreenAdapter extends RecyclerView.Adapter<OrderScreenViewHold
         holder.binding.menuName.setText(data.get(position).getMenu_name());
         holder.binding.menuPrice.setText(String.valueOf(data.get(position).getMenu_price()));
 
+
         Glide.with(holder.binding.getRoot())
                 .load(data.get(position).getImage_url())
                 .into(holder.binding.menuImage);
