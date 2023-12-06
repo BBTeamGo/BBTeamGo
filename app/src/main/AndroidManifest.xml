@@ -15,14 +15,6 @@
         android:theme="@style/Theme.BBTeamGo"
         tools:targetApi="33">
         <activity
-            android:name=".OrderScreenActivity"
-            android:exported="true" />
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBLJKr0LTFLKy-QAJqeFSIXgHsfd5wLQSM" />
-
-        <activity
             android:name=".CustomerActivity"
             android:exported="true" />
         <activity

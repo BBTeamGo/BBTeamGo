@@ -156,8 +156,8 @@ public class ManagerLoginFragment extends Fragment {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = userAuth.getCurrentUser();
 
-                            Intent intent = new Intent(getActivity(), CustomerActivity.class);
-                            intent.putExtra("USER_PROFILE", "email: " + user.getEmail() + "\n" + "uid: " + user.getUid());
+                            Intent intent = new Intent(getActivity(), ManagerSelectBoothActivity.class);
+                            intent.putExtra("USER_PROFILE", "email: " + email + "\n" + "uid: " + user.getUid());
 
                             startActivity(intent);
                         } else {

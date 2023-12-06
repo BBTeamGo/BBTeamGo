@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,57 +24,17 @@ import java.util.Map;
 public class LoginHelper {
     private final static String TAG = "EmailPassword";
 
-    public static void changeUserMembership(DocumentReference user, String membership) {
-        user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        updateUserAccount(user, membership);
-                    } else {
-                        createUserAccount(user, membership);
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
-    }
+    public static void updateUserData(DocumentReference user, String email, String membership) {
+        Log.d(TAG, "updateUserData");
 
-    public static void createUserAccount(DocumentReference user, String membership) {
         Map<String, Object> data = new HashMap<>();
+        data.put("email", email);
         data.put("membership", membership);
-        data.put("last_login_mode", "Customer");
-        user.set(data);
-    }
 
-    public static void updateUserAccount(DocumentReference user, String membership) {
-        user.update("membership", membership).addOnSuccessListener(new OnSuccessListener<Void>() {
+        user.set(data, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
+                    public void onSuccess(Void unused) {
                         Log.d(TAG, "DocumentSnapshot successfully updated!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error updating document", e);
-                    }
-                });
-    }
-
-    public static void updateLastLoginMode(DocumentReference user, String mode) {
-        user.update("last_login_mode", mode).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully updated!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error updating document", e);
                     }
                 });
     }

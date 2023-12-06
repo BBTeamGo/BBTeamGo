@@ -31,15 +31,12 @@ import java.util.List;
  * Use the {@link CusotmerHomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback {
+public class CusotmerHomeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private GoogleMap mMap;
-    private SearchView searchView;
-
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -88,55 +85,10 @@ public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.map);
-        searchView = searchView.findViewById(R.id.searchView);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                String location = searchView.getQuery().toString();
-                List<Address> addressList = null;
-                if(location != null || !location.equals("")){
-                    Geocoder geocoder = new Geocoder(getActivity());
-
-                        try {
-                            addressList = geocoder.getFromLocationName(location,1);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    Address address = addressList.get(0);
-                    LatLng latLng = new LatLng(address.getLatitude(),address.getLongitude());
-                    mMap.addMarker(new MarkerOptions().position(latLng).title(location));
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
-                }
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
-        mapFragment.getMapAsync(this);
     }
 
-
-
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        LatLng SEOUL = new LatLng(37.56, 126.97);
-        MarkerOptions markerOptions = new MarkerOptions();         // 마커 생성
-        markerOptions.position(SEOUL);
-        markerOptions.title("서울");                         // 마커 제목
-        markerOptions.snippet("한국의 수도");         // 마커 설명
-        mMap.addMarker(markerOptions);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));                 // 초기 위치
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));                         // 줌의 정도
-        googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);                           // 지도 유형 설정
+    private FragmentManager getSupportFragmentManager() {
+        return null;
     }
 
     @NonNull
