@@ -17,9 +17,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +47,7 @@ public class CustomerMyprofileFragment extends Fragment {
     public EditText eText, eText2;
     public Button sendButton, cancelButton, sendButton2, cancelButton2;
     private FirebaseAuth auth;
+    private FirebaseFirestore firestore;
 
     private MaterialButton resetPasswordButton;
 
@@ -74,7 +80,7 @@ public class CustomerMyprofileFragment extends Fragment {
         // Inflate the layout for this fragment
        View view = inflater.inflate(R.layout.fragment_customer_myprofile, container, false);
         auth = FirebaseAuth.getInstance();
-
+        loadUserProfile();
         return view;
     }
 
@@ -96,6 +102,7 @@ public class CustomerMyprofileFragment extends Fragment {
             sendButton.setOnClickListener(view1 -> {
                 inputname.setText(eText.getText().toString());
                 Log.d("cmh", eText.getText().toString());
+                saveDisplayName();
                 nameDialog.dismiss();
             });
             cancelButton.setOnClickListener(view2 -> {
@@ -122,6 +129,7 @@ public class CustomerMyprofileFragment extends Fragment {
             sendButton2.setOnClickListener(view1 -> {
                 feelingMessage.setText(eText2.getText().toString());
                 Log.d("cmh", eText2.getText().toString());
+                saveStatusMessage();
                 feelDialog.dismiss();
             });
             cancelButton2.setOnClickListener(view2 -> {
@@ -179,9 +187,66 @@ public class CustomerMyprofileFragment extends Fragment {
         }
     }
 
+    private void loadUserProfile() {
+        // 현재 로그인된 사용자의 UID 가져오기
+        String uid = auth.getCurrentUser().getUid();
+
+        // Firestore에서 해당 사용자의 정보 불러오기
+        DocumentReference userRef = firestore.collection("User").document(uid);
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        // 사용자 정보가 Firestore에 저장되어 있는 경우, UI에 표시
+                        String displayName = document.getString("displayName");
+                        String statusMessage = document.getString("statusMessage");
+
+                       inputname.setText(displayName);
+                        feelingMessage.setText(statusMessage);
+                    }
+                }
+            }
+        });
+    }
 
 
+    private void saveDisplayName() {
+        String uid = auth.getCurrentUser().getUid();
+        String displayName = eText.getText().toString();
 
+        DocumentReference userRef = firestore.collection("users").document(uid);
+        userRef.update("displayName", displayName)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // 업데이트 성공
+                        } else {
+                            // 업데이트 실패
+                        }
+                    }
+                });
+    }
+
+    private void saveStatusMessage() {
+        String uid = auth.getCurrentUser().getUid();
+        String statusMessage = eText2.getText().toString();
+
+        DocumentReference userRef = firestore.collection("users").document(uid);
+        userRef.update("statusMessage", statusMessage)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // 업데이트 성공
+                        } else {
+                            // 업데이트 실패
+                        }
+                    }
+                });
+    }
 
 }
 
