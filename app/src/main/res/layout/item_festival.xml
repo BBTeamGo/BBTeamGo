@@ -18,7 +18,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
             android:background="@drawable/booking_management_list_background"
-            android:src="@drawable/festival_test_image" />
+            android:src="@drawable/festival_example_image" />
 
         <TextView
             android:id="@+id/festival_name"

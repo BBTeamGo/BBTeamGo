@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -38,24 +37,15 @@ public class ManagerSelectBoothActivity extends AppCompatActivity implements Boo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_select_booth);
 
-        database = FirebaseFirestore.getInstance();
-
-        getUserInfo();
-    }
-
-    private void getUserInfo() {
         Intent intent = getIntent();
         userid = intent.getStringExtra("USER_ID");
         userEmail = intent.getStringExtra("USER_EMAIL");
 
-        Log.d(TAG, "UserId:" + userid);
-        getUserMembership();
-        return;
-    }
-
-    private void getUserMembership() {
-        database.collection("User").document(userid)
-                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        database = FirebaseFirestore.getInstance();
+        database.collection("User")
+                .document(userid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
@@ -93,7 +83,6 @@ public class ManagerSelectBoothActivity extends AppCompatActivity implements Boo
                                 String title = Objects.requireNonNull(data.get("name")).toString();
                                 String explainText = Objects.requireNonNull(data.get("explain_text")).toString();
 
-                                Log.d(TAG, "Push Booth Success");
                                 booths.add(new BoothItem(pictureURL, title, explainText));
                             }
 
@@ -109,9 +98,7 @@ public class ManagerSelectBoothActivity extends AppCompatActivity implements Boo
     private void makeRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
-        Log.d(TAG, "1");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Log.d(TAG, "2");
         recyclerView.setAdapter(new BoothAdapter(getApplicationContext(), booths, this));
 
         Log.d(TAG, "RecyclerView End");
@@ -142,9 +129,11 @@ public class ManagerSelectBoothActivity extends AppCompatActivity implements Boo
                                 // Bundle에 정보를 넣어서 Fragment에 설정합니다.
                                 Bundle args = new Bundle();
                                 args.putString("BOOTH_NAME", booths.get(position).getTitle());
+                                args.putString("UNIVERSITY_NAME", userMembership);
                                 args.putString("BOOTH_PASSWORD", boothPassword[0]);
                                 args.putString("USER_EMAIL", userEmail);
                                 args.putString("USER_ID", userid);
+
                                 passwordFragment.setArguments(args);
 
                                 passwordFragment.show(getSupportFragmentManager(), "PasswordDialogFragment");
