@@ -44,6 +44,9 @@ android {
 
 
 dependencies {
+    //autoPlaceprediction sdk를 사용하기 위해 추가한 부분
+    implementation ("com.google.android.libraries.places:places:2.5.0")
+
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
 

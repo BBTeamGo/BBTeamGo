@@ -8,22 +8,35 @@
     android:orientation="vertical">
 
     <FrameLayout
+        android:id="@+id/mapLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/mapLayout"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-
-            <fragment
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".MapsFragment" />
+                android:layout_height="match_parent">
+
+
+                <fragment
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <EditText
+                    android:background="@drawable/search_input"
+                    android:id="@+id/search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Search" />
+
+            </FrameLayout>
 
             <!--            <EditText-->
             <!--                android:id="@+id/search_festival"-->
@@ -39,11 +52,11 @@
             <!--                android:textSize="20dp" />-->
 
 
-
         </RelativeLayout>
 
 
         <LinearLayout
+            android:id="@+id/festivalLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="300dp"
@@ -61,14 +74,17 @@
                 android:textSize="30dp"
                 android:textStyle="bold" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbars="vertical"
-                    android:layout_weight="1"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_festival" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scrollbars="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/festival_item_view" />
+
 
         </LinearLayout>
 
