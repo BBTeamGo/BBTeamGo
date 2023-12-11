@@ -51,7 +51,6 @@ public class ManagerTableFragment extends Fragment {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static ManagerTableFragment newInstance(String param1, String param2) {
         ManagerTableFragment fragment = new ManagerTableFragment();
         Bundle args = new Bundle();

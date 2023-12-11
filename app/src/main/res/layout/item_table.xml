@@ -2,19 +2,23 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginBottom="24dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/table_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="112dp"
         android:minHeight="112dp"
-        android:src="@drawable/table_background_used"
+        android:minWidth="112dp"
+        android:src="@drawable/used_table_background"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
         android:id="@+id/table_index"
@@ -22,24 +26,23 @@
         android:layout_height="wrap_content"
         android:text="1"
         android:textSize="48sp"
-        android:textColor="@color/black"
         android:textStyle="bold"
-        android:layout_marginBottom="32dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="12dp"
         app:layout_constraintTop_toTopOf="@id/table_state"
         app:layout_constraintStart_toStartOf="@id/table_state"
-        app:layout_constraintEnd_toEndOf="@id/table_state"
-        app:layout_constraintBottom_toBottomOf="@id/table_state"/>
+        app:layout_constraintEnd_toEndOf="@id/table_state" />
 
     <TextView
         android:id="@+id/table_elapsed_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="10분 경과"
-        android:textColor="@color/grey"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/table_index"
+        android:text="경과 시간 10분"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="16dp"
         app:layout_constraintStart_toStartOf="@id/table_state"
-        app:layout_constraintEnd_toEndOf="@id/table_state" />
-
+        app:layout_constraintEnd_toEndOf="@id/table_state"
+        app:layout_constraintBottom_toBottomOf="@id/table_state" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

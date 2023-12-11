@@ -2,17 +2,20 @@ package com.example.bbteamgo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.bbteamgo.databinding.ActivityManagerBinding;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class ManagerActivity extends AppCompatActivity {
-    String university;
-    String booth;
+    private static final String TAG = "ManagerActivity";
+    String booth = null;
+    String university = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,10 +23,13 @@ public class ManagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manager);
 
         Intent intent = getIntent();
+        university = intent.getStringExtra("UNIVERSITY_NAME");
+        booth = intent.getStringExtra("BOOTH_NAME");
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_container_view_tag, ManagerTableFragment.newInstance(university, booth))
+                .add(R.id.fragment_container_view_tag,
+                        ManagerTableFragment.newInstance(university, booth))
                 .commit();
 
         NavigationBarView navigationBarView = findViewById(R.id.navigation_bar);
