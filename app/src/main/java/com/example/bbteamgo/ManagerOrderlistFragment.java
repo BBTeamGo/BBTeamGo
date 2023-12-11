@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.bbteamgo.databinding.FragmentManagerOrderlistBinding;
@@ -39,6 +40,8 @@ public class ManagerOrderlistFragment extends Fragment {
 
     FragmentManagerOrderlistBinding binding;
     private ImageButton btnDialogCancel;
+
+    private Button addOrderButton;
     private  Dialog dialog;
 
     public ManagerOrderlistFragment() {

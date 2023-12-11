@@ -1,13 +1,14 @@
 package com.example.bbteamgo;
 
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import androidx.fragment.app.FragmentTransaction;
+
 import androidx.lifecycle.viewmodel.CreationExtras;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,20 +18,15 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -234,8 +230,12 @@ public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback
         @NonNull
         @Override
         public FestivalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.festival_item_view, parent, false);
             return new FestivalViewHolder(view); // CusotmerHomeFragment.this를 전달
+
+          
+
         }
 
         //    @Override

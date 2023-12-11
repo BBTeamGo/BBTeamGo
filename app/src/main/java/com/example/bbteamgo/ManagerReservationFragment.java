@@ -2,11 +2,19 @@ package com.example.bbteamgo;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.bbteamgo.databinding.FragmentManagerReservationBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +31,8 @@ public class ManagerReservationFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    FragmentManagerReservationBinding binding;
 
     public ManagerReservationFragment() {
         // Required empty public constructor
@@ -59,7 +69,20 @@ public class ManagerReservationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_manager_reservation, container, false);
+        binding = FragmentManagerReservationBinding.inflate(inflater,container,false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        List<BookingManagementData> data = new ArrayList<BookingManagementData>();
+        data.add(new BookingManagementData(1, "조민혁", "20분 30초"));
+        data.add(new BookingManagementData(2, "공민기", "15분 21초"));
+        data.add(new BookingManagementData(3, "이종은", "12분 30초"));
+
+        binding.bookingManagementRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.bookingManagementRecyclerview.setAdapter(new BookingManagementAdapter(data));
     }
 
     /**

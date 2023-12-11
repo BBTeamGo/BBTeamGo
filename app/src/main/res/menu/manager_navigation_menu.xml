@@ -2,27 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/table_button"
+        android:id="@+id/table_menu"
         android:title="좌석"
         android:icon="@drawable/table" />
 
     <item
-        android:id="@+id/income_button"
+        android:id="@+id/income_menu"
         android:title="총 수입"
         android:icon="@drawable/income" />
 
     <item
-        android:id="@+id/reservation_manager_button"
+        android:id="@+id/reservation_menu"
         android:title="예약관리"
         android:icon="@drawable/reservation" />
 
     <item
-        android:id="@+id/order_button"
+        android:id="@+id/order_menu"
         android:title="주문내역"
         android:icon="@drawable/details" />
 
     <item
-        android:id="@+id/myinfo_button"
+        android:id="@+id/myinfo_menu"
         android:title="내 정보"
         android:icon="@drawable/user" />
 </menu>

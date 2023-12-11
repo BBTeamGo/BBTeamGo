@@ -18,7 +18,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
             android:background="@drawable/booking_management_list_background"
-            android:src="@drawable/homeicon2" />
+            android:src="@drawable/home" />
 
         <TextView
             android:id="@+id/table_name"
