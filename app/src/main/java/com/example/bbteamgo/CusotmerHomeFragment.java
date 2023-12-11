@@ -6,15 +6,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
 import androidx.fragment.app.FragmentTransaction;
+
 import androidx.lifecycle.viewmodel.CreationExtras;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+
 import android.widget.TextView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,18 +35,16 @@ import java.util.List;
  * Use the {@link CusotmerHomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CusotmerHomeFragment extends Fragment {
+public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback {
 
 
-    private FirebaseFirestore firestore;
+    private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private RecyclerView recyclerView;
     private FestivalAdapter festivalAdapter;
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
 
-    private String mParam1;
-    private String mParam2;
+    private GoogleMap mMap;
+
 
     public CusotmerHomeFragment() {
         // Required empty public constructor
@@ -48,20 +53,15 @@ public class CusotmerHomeFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static CusotmerHomeFragment newInstance(String param1, String param2) {
         CusotmerHomeFragment fragment = new CusotmerHomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+
     }
 
     @Override
@@ -69,7 +69,6 @@ public class CusotmerHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cusotmer_home, container, false);
-        firestore = FirebaseFirestore.getInstance();
 
         // RecyclerView 초기화
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -77,8 +76,43 @@ public class CusotmerHomeFragment extends Fragment {
 
         // 축제 데이터를 가져오는 메서드 호출
         loadFestivalData();
+//
+        EditText search = (EditText) view.findViewById(R.id.search);
+        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String location = search.getText().toString();
+                    List<Address> addressList = null;
+
+                    if (location != null || !location.equals("")) {
+                        Geocoder geocoder = new Geocoder(getActivity());
+                        try {
+                            addressList = geocoder.getFromLocationName(location, 1);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        Address address = addressList.get(0);
+                        LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                        mMap.addMarker(new MarkerOptions().position(latLng).title(location));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                    }
+                }
+                return false;
+            }
+        });
 
 
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+//        mapFragment.getMapAsync((OnMapReadyCallback) this);
+//        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapContainer);
+//        if (mapFragment == null) {
+//            mapFragment = SupportMapFragment.newInstance();
+//            getChildFragmentManager().beginTransaction().replace(R.id.mapContainer, mapFragment).commit();
+//            mapFragment.getMapAsync((OnMapReadyCallback) this);
+//            Log.i("cmh", "여기 실행됨");
+//        }
         return view;
         //여기서 return 시킨 view를 띄우는 onViewCreated에 띄우는거네 ㅇㅋ
     }
@@ -157,21 +191,32 @@ public class CusotmerHomeFragment extends Fragment {
             this.festivalImg = festivalImg;
         }
     }
+
     public class FestivalViewHolder extends RecyclerView.ViewHolder {
         private TextView festivalNameTextView;
         private TextView festivalExplainTextView;
+        private CusotmerHomeFragment customerHomeFragment;
 
         public FestivalViewHolder(@NonNull View itemView) {
             super(itemView);
+
             festivalNameTextView = itemView.findViewById(R.id.festival_name);
             festivalExplainTextView = itemView.findViewById(R.id.festival_exp);
-            // 예시로 TextView를 사용했습니다.
+
+
+            NowFestivalFragement nowFestivalFragment = new NowFestivalFragement();
+            //얘가 왜 정상적으로 넘어가지 않는 건지 진짜 알 수가 없네
+            itemView.setOnClickListener(view -> {
+                getActivity().getSupportFragmentManager().beginTransaction().
+                        replace(R.id.fragment_container_view_tag,new NowFestivalFragement()).commit();
+
+            });
         }
 
         public void bind(Festival festival) {
             festivalNameTextView.setText(festival.getFestivalName());
             festivalExplainTextView.setText(festival.getFestivalExplain());
-            // 필요한 경우 다른 뷰에 대한 데이터 바인딩도 수행할 수 있습니다.
+            // 필요한 경우 추가적인 데이터 바인딩 수행
         }
     }
 
@@ -185,11 +230,19 @@ public class CusotmerHomeFragment extends Fragment {
         @NonNull
         @Override
         public FestivalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_festival, parent, false);
-            return new FestivalViewHolder(view);
+
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.festival_item_view, parent, false);
+            return new FestivalViewHolder(view); // CusotmerHomeFragment.this를 전달
+
+          
+
         }
 
-        @Override
+        //    @Override
+//    public void onBindViewHolder(@NonNull FestivalViewHolder holder, int position) {
+//        Festival festival = festivalList.get(position);
+//        holder.bind(festival);
+//    }
         public void onBindViewHolder(@NonNull FestivalViewHolder holder, int position) {
             Festival festival = festivalList.get(position);
             holder.bind(festival);
@@ -199,24 +252,26 @@ public class CusotmerHomeFragment extends Fragment {
         public int getItemCount() {
             return festivalList.size();
         }
+
     }
-
-    private void addGoogleMapFragment() {
-        FragmentManager fragmentManager = getChildFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        GoogleMapFragment googleMapFragment = new GoogleMapFragment();
-        fragmentTransaction.replace(R.id.map, googleMapFragment);
-        fragmentTransaction.addToBackStack(null); // 백 스택에 추가하면 뒤로 가기 버튼으로 Fragment를 제거할 수 있음
-        fragmentTransaction.commit();
-    }
-
-
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
+    }
+
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        LatLng SoongSil = new LatLng(37.2946, 126.5726);
+        mMap.addMarker(new MarkerOptions().position(SoongSil).title("Marker in SoongSil"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SoongSil, 14));
+
     }
 
     private FragmentManager getSupportFragmentManager() {
@@ -229,4 +284,5 @@ public class CusotmerHomeFragment extends Fragment {
         return super.getDefaultViewModelCreationExtras();
     }
 }
+
 
