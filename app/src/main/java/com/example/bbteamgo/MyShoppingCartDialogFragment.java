@@ -11,11 +11,13 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bbteamgo.R;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyShoppingCartDialogFragment extends DialogFragment {
 
     private RecyclerView myShoppingCartRecyclerView;
+
 
     @Nullable
     @Override
@@ -26,7 +28,14 @@ public class MyShoppingCartDialogFragment extends DialogFragment {
         myShoppingCartRecyclerView = view.findViewById(R.id.my_shopping_cart_recyclerview);
         myShoppingCartRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        // TODO: RecyclerView 어댑터 설정 (추가로 구현 필요)
+
+        List<MyShoppingCartData> shoppingCartItems = ShoppingCart.getInstance().getItems();
+
+
+
+        MyShoppingCartAdapter adapter = new MyShoppingCartAdapter(requireContext(), shoppingCartItems);
+        myShoppingCartRecyclerView.setAdapter(adapter);
+
 
         return view;
     }
