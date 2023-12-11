@@ -60,7 +60,6 @@ public class ManagerTableFragment extends Fragment {
         return fragment;
     }
 
-    private FirebaseFirestore database;
     private DocumentReference boothRef;
 
     List<Table> tables = new ArrayList<>();
@@ -76,11 +75,13 @@ public class ManagerTableFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        database = FirebaseFirestore.getInstance();
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
         boothRef = database.collection("University")
                 .document(university)
                 .collection("Booth")
                 .document(booth);
+
+        Log.d(TAG, "onCreateView");
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_manager_table, container, false);

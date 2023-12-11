@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +23,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -107,7 +105,6 @@ public class ManagerIncomeFragment extends Fragment {
                             Collections.sort(orders, (Order a, Order b) -> a.getTime().compareTo(b.getTime()) );
 
                             RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-
                             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                             recyclerView.setAdapter(new OrderAdapter(getActivity(), orders));
                         } else {
@@ -139,8 +136,9 @@ class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder> {
         holder.tableIndex.setText(orders.get(position).getTableIndex() + "번 테이블");
 
         Timestamp orderTime = orders.get(position).getTime();
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-        holder.orderTime.setText(format.format(orderTime) + " 주문");
+        SimpleDateFormat f = new SimpleDateFormat("HH:mm");
+        String formattedDate = f.format(orderTime.toDate());
+        holder.orderTime.setText(formattedDate + " 주문");
     }
 
     @Override
