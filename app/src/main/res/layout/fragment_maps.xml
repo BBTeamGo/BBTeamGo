@@ -4,4 +4,17 @@
     android:id="@+id/mapContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<fragment
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+</fragment>
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="Search for a place" />
+
 </FrameLayout>

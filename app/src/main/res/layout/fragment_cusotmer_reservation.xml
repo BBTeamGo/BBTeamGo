@@ -12,4 +12,13 @@
         android:text="내 예약"
         android:textSize="25dp" />
 
+    <Button
+        android:id="@+id/addReservation"
+        android:background="@drawable/add_button"
+        android:layout_gravity="bottom|center"
+        android:textSize="20dp"
+        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:text="더 예약하기"
+        />
 </FrameLayout>

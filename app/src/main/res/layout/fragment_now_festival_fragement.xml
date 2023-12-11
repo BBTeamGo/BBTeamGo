@@ -5,9 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:id="@+id/mapLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search" />
+
+    </FrameLayout>
+
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="300dp"
         android:layout_weight="1"
         android:background="@drawable/listteme"
@@ -27,13 +57,14 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/returntxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="다른 축제 찾기"
+                android:layout_alignBottom="@+id/nowFestival"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="20dp"
-                android:layout_alignBottom="@+id/nowFestival"
-                android:textColor="#CD3535"/>
+                android:text="다른 축제 찾기"
+                android:textColor="#CD3535" />
         </RelativeLayout>
 
         <TextView
@@ -46,18 +77,15 @@
             android:textSize="30dp"
             android:textStyle="bold" />
 
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/festival_item_view" />
-        </fragment>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/festival_item_view" />
+
 
     </LinearLayout>
 
-
+    </FrameLayout>
 </LinearLayout>

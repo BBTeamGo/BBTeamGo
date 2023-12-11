@@ -26,23 +26,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CustomerMyprofileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-
 public class CustomerMyprofileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    public TextView inputname, feelingMessage,feelingmsgChange,changePw,logOut;
+    public TextView inputname, feelingMessage, feelingmsgChange, changePw, logOut;
 
     public EditText eText, eText2;
     public Button sendButton, cancelButton, sendButton2, cancelButton2;
@@ -55,30 +41,22 @@ public class CustomerMyprofileFragment extends Fragment {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static CustomerMyprofileFragment newInstance(String param1, String param2) {
         CustomerMyprofileFragment fragment = new CustomerMyprofileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View view = inflater.inflate(R.layout.fragment_customer_myprofile, container, false);
+        View view = inflater.inflate(R.layout.fragment_customer_myprofile, container, false);
         auth = FirebaseAuth.getInstance();
         loadUserProfile();
         return view;
@@ -88,8 +66,6 @@ public class CustomerMyprofileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
         inputname = view.findViewById(R.id.namecard);
         Dialog nameDialog;
         nameDialog = new Dialog(getActivity());
@@ -97,7 +73,7 @@ public class CustomerMyprofileFragment extends Fragment {
         eText = nameDialog.findViewById(R.id.inputName);
         sendButton = nameDialog.findViewById(R.id.changeButton);
         cancelButton = nameDialog.findViewById(R.id.cancelButton);
-        inputname.setOnClickListener( view4 ->
+        inputname.setOnClickListener(view4 ->
         {
             sendButton.setOnClickListener(view1 -> {
                 inputname.setText(eText.getText().toString());
@@ -110,11 +86,17 @@ public class CustomerMyprofileFragment extends Fragment {
             });
             inputname.setText(eText.getText().toString());
             nameDialog.show();
-
         });
 
         //프로필 사진 변경하는 부분
         // 이거는 일단 외부 갤러리에서 데이터를 가져와서 사용해야하기 떄문에 좀 미루고
+        //사진 몇 개를 db에 올려두고 거기서 선택하거나 사진은 그냥 기본 이미지로 두는 식으로 해도 괜찮을 듯
+
+
+
+
+
+
         //상태메세지를 변경하는 부분
 
         feelingMessage = view.findViewById(R.id.feelingMessage);
@@ -142,31 +124,26 @@ public class CustomerMyprofileFragment extends Fragment {
         //로그아웃 기능은 버튼 눌렀을 때 그냥 초기화면으로 보내면 되니까 쉽고
 
         logOut = view.findViewById(R.id.logOut);
-        logOut.setOnClickListener(view1->{
-          logout();
+        logOut.setOnClickListener(view1 -> {
+            logout();
         });
-
-
         //비밀번호 변경은 서버와의 연결이 최우선이니까 이게 제일 중요할듯
         changePw = view.findViewById(R.id.changePw);
 
-        changePw.setOnClickListener(view1->
+        changePw.setOnClickListener(view1 ->
         {
             sendPasswordResetEmail();
         });
-
     }
 
     private void logout() {
         auth.signOut();
-
         // 로그아웃 후 MainActivity로 이동
         Intent intent = new Intent(requireContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         requireActivity().finish();
     }
-
 
     private void sendPasswordResetEmail() {
         FirebaseUser currentUser = auth.getCurrentUser();
@@ -190,7 +167,6 @@ public class CustomerMyprofileFragment extends Fragment {
     private void loadUserProfile() {
         // 현재 로그인된 사용자의 UID 가져오기
         String uid = auth.getCurrentUser().getUid();
-
         // Firestore에서 해당 사용자의 정보 불러오기
         DocumentReference userRef = firestore.collection("User").document(uid);
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -203,7 +179,7 @@ public class CustomerMyprofileFragment extends Fragment {
                         String displayName = document.getString("displayName");
                         String statusMessage = document.getString("statusMessage");
 
-                       inputname.setText(displayName);
+                        inputname.setText(displayName);
                         feelingMessage.setText(statusMessage);
                     }
                 }
@@ -211,12 +187,11 @@ public class CustomerMyprofileFragment extends Fragment {
         });
     }
 
-
     private void saveDisplayName() {
         String uid = auth.getCurrentUser().getUid();
         String displayName = eText.getText().toString();
 
-        DocumentReference userRef = firestore.collection("users").document(uid);
+        DocumentReference userRef = firestore.collection("User").document(uid);
         userRef.update("displayName", displayName)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -233,8 +208,7 @@ public class CustomerMyprofileFragment extends Fragment {
     private void saveStatusMessage() {
         String uid = auth.getCurrentUser().getUid();
         String statusMessage = eText2.getText().toString();
-
-        DocumentReference userRef = firestore.collection("users").document(uid);
+        DocumentReference userRef = firestore.collection("User").document(uid);
         userRef.update("statusMessage", statusMessage)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -247,7 +221,9 @@ public class CustomerMyprofileFragment extends Fragment {
                     }
                 });
     }
-
+    //이쪽은 종은이가 firebase 로그인쪽을 어떻게 건드는지에 따라서 수정하면 될 듯 이게 불러올 정보가 없으니까
+    // load하는데 안에 있는게 없으니까 종료되는거네 ㅇㅋㅁ
+    //그치 데이터 제대로 가져와서 만들 수 있도록 하자
+    //그리고 프로필사진은 선택할 수 있도록 설정하는게 좋아보인다.
 }
-
-
+//이거 firebase 수정해야지만 돌아간다.
