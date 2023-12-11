@@ -12,8 +12,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.List;
 
 public class BoothAdapter extends RecyclerView.Adapter<BoothViewHolder> {
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-
     public interface OnBoothClickListener {
         void onBoothClick(int position);
     }

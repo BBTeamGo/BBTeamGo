@@ -2,17 +2,14 @@ package com.example.bbteamgo;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,6 +20,8 @@ public class ManagerBoothSelectEnterPasswordFragment extends DialogFragment {
 
     String userId = null;
     String userEmail = null;
+    String userUniversity = null;
+    String userBooth = null;
     String password = null;
 
     @Override
@@ -35,13 +34,14 @@ public class ManagerBoothSelectEnterPasswordFragment extends DialogFragment {
 
         Bundle args = getArguments();
         if (args != null) {
-            String boothName = args.getString("BOOTH_NAME");
-            TextView textView = dialog.findViewById(R.id.title);
-            textView.setText(boothName);
-
             userId = args.getString("USER_ID");
             userEmail = args.getString("USER_EMAIL");
             password = args.getString("BOOTH_PASSWORD");
+            userUniversity = args.getString("UNIVERSITY_NAME");
+            userBooth = args.getString("BOOTH_NAME");
+            TextView textView = dialog.findViewById(R.id.title);
+            textView.setText(userBooth);
+
             Log.d(TAG, "password is :" + password);
         }
 
@@ -64,6 +64,8 @@ public class ManagerBoothSelectEnterPasswordFragment extends DialogFragment {
                     Intent intent = new Intent(getActivity(), ManagerActivity.class);
                     intent.putExtra("USER_EMAIL", userEmail);
                     intent.putExtra("USER_ID", userId);
+                    intent.putExtra("BOOTH_NAME", userBooth);
+                    intent.putExtra("UNIVERSITY_NAME", userUniversity);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getActivity(), "부스 인증에 실패하였습니다.", Toast.LENGTH_SHORT).show();
