@@ -142,6 +142,7 @@ public class ManagerSelectBoothActivity extends AppCompatActivity implements Boo
                                 // Bundle에 정보를 넣어서 Fragment에 설정합니다.
                                 Bundle args = new Bundle();
                                 args.putString("BOOTH_NAME", booths.get(position).getTitle());
+                                args.putString("UNIVERSITY_NAME", userMembership);
                                 args.putString("BOOTH_PASSWORD", boothPassword[0]);
                                 args.putString("USER_EMAIL", userEmail);
                                 args.putString("USER_ID", userid);

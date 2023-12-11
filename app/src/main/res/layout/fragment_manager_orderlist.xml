@@ -8,7 +8,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/bottom_rounded_background"
+        android:background="@drawable/top_sheet_blue_background"
         android:text="주문 내역"
         android:textColor="#FFFFFF"
         android:textSize="20sp"

@@ -24,6 +24,8 @@ public class ManagerBoothSelectEnterPasswordFragment extends DialogFragment {
     String userId = null;
     String userEmail = null;
     String password = null;
+    String booth = null;
+    String university = null;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -35,13 +37,14 @@ public class ManagerBoothSelectEnterPasswordFragment extends DialogFragment {
 
         Bundle args = getArguments();
         if (args != null) {
-            String boothName = args.getString("BOOTH_NAME");
-            TextView textView = dialog.findViewById(R.id.title);
-            textView.setText(boothName);
-
+            booth = args.getString("BOOTH_NAME");
             userId = args.getString("USER_ID");
             userEmail = args.getString("USER_EMAIL");
             password = args.getString("BOOTH_PASSWORD");
+            university = args.getString("UNIVERSITY_NAME");
+
+            TextView textView = dialog.findViewById(R.id.title);
+            textView.setText(booth);
             Log.d(TAG, "password is :" + password);
         }
 
