@@ -29,6 +29,7 @@ public class ManagerSelectBoothActivity extends AppCompatActivity implements Boo
     private FirebaseFirestore database;
 
     List<BoothItem> booths = new ArrayList<>();
+    String userEmail = null;
     String userid = null;
     String userMembership = null;
 
@@ -39,18 +40,13 @@ public class ManagerSelectBoothActivity extends AppCompatActivity implements Boo
 
         database = FirebaseFirestore.getInstance();
 
-        getUserId();
+        getUserInfo();
     }
 
-    private void getUserId() {
+    private void getUserInfo() {
         Intent intent = getIntent();
-        String userProfile = intent.getStringExtra("USER_PROFILE");
-
-        if (userProfile != null) {
-            String[] parts = userProfile.split("\n"); // 문자열을 분리하여 배열로 변환
-            String uidPart = parts[1]; // 첫 번째 부분에는 email 정보가 있습니다.
-            userid = uidPart.split(": ")[1]; // emailPart를 ": "으로 분리하여 email 정보만 추출
-        }
+        userid = intent.getStringExtra("USER_ID");
+        userEmail = intent.getStringExtra("USER_EMAIL");
 
         Log.d(TAG, "UserId:" + userid);
         getUserMembership();
@@ -123,8 +119,43 @@ public class ManagerSelectBoothActivity extends AppCompatActivity implements Boo
 
     @Override
     public void onBoothClick(int position) {
-        Toast.makeText(this, "클릭한 아이템: " + booths.get(position).getTitle(), Toast.LENGTH_SHORT).show();
-        // 비밀번호 입력 다이어로그 띄우기
+        // 부스의 비밀번호 가져오기
+        String[] boothPassword = new String[1];
+
+        database.collection("University")
+                .document(userMembership)
+                .collection("Booth")
+                .document(booths.get(position).getTitle())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Map<String, Object> data = document.getData();
+                                boothPassword[0] = Objects.requireNonNull(data.get("password")).toString();
+
+                                // 비밀번호 입력 다이어로그 띄우기
+                                ManagerBoothSelectEnterPasswordFragment passwordFragment = new ManagerBoothSelectEnterPasswordFragment();
+
+                                // Bundle에 정보를 넣어서 Fragment에 설정합니다.
+                                Bundle args = new Bundle();
+                                args.putString("BOOTH_NAME", booths.get(position).getTitle());
+                                args.putString("BOOTH_PASSWORD", boothPassword[0]);
+                                args.putString("USER_EMAIL", userEmail);
+                                args.putString("USER_ID", userid);
+                                passwordFragment.setArguments(args);
+
+                                passwordFragment.show(getSupportFragmentManager(), "PasswordDialogFragment");
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
     }
 
 }

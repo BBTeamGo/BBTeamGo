@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
 
             Log.d(TAG, "fast Login email:" + currentUser.getEmail());
             Log.d(TAG, "fast Login Uid:" + currentUser.getUid());
-            intent.putExtra("USER_PROFILE", "email: " + currentUser.getEmail() + "\n" + "uid: " + currentUser.getUid());
+            intent.putExtra("USER_EMAIL", currentUser.getEmail());
+            intent.putExtra("USER_ID", currentUser.getUid());
             startActivity(intent);
         } else {
             InitScreen();
