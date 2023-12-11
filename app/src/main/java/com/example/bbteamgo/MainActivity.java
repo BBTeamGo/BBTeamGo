@@ -55,14 +55,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void reload(FirebaseUser currentUser) {
-        Boolean isFastLogin = true, isManagerLogin = true;
+        boolean isFastLogin = true, isManagerLogin = true;
 
         if (isFastLogin) {
             Intent intent = null;
-            if (isManagerLogin)
+            if (isManagerLogin) {
                 intent = new Intent(this, ManagerSelectBoothActivity.class);
-            else if (!isManagerLogin)
+            } else {
                 intent = new Intent(this, CustomerActivity.class);
+            }
 
             Log.d(TAG, "fast Login email:" + currentUser.getEmail());
             Log.d(TAG, "fast Login Uid:" + currentUser.getUid());

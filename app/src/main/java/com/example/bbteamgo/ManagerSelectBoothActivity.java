@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class ManagerSelectBoothActivity extends AppCompatActivity {
+public class ManagerSelectBoothActivity extends AppCompatActivity implements BoothAdapter.OnBoothClickListener {
     private final static String TAG = "BoothSelect";
 
     private FirebaseFirestore database;
@@ -66,6 +67,8 @@ public class ManagerSelectBoothActivity extends AppCompatActivity {
                             if (document.exists()) {
                                 Map<String, Object> data = document.getData();
                                 userMembership = data.get("membership").toString();
+
+                                Log.d(TAG, "User Membership:" + userMembership);
                                 makeBoothArray();
                             } else {
                                 Log.d(TAG, "No such document");
@@ -80,7 +83,7 @@ public class ManagerSelectBoothActivity extends AppCompatActivity {
 
     private void makeBoothArray() {
         database.collection("University")
-                .document("Soongsil")
+                .document(userMembership)
                 .collection("Booth")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -94,10 +97,11 @@ public class ManagerSelectBoothActivity extends AppCompatActivity {
                                 String title = Objects.requireNonNull(data.get("name")).toString();
                                 String explainText = Objects.requireNonNull(data.get("explain_text")).toString();
 
-                                Log.d(TAG, "Get data Success");
+                                Log.d(TAG, "Push Booth Success");
                                 booths.add(new BoothItem(pictureURL, title, explainText));
                             }
 
+                            Log.d(TAG, "Get data Success");
                             makeRecyclerView();
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -109,9 +113,18 @@ public class ManagerSelectBoothActivity extends AppCompatActivity {
     private void makeRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
+        Log.d(TAG, "1");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new BoothAdapter(getApplicationContext(), booths));
+        Log.d(TAG, "2");
+        recyclerView.setAdapter(new BoothAdapter(getApplicationContext(), booths, this));
 
         Log.d(TAG, "RecyclerView End");
     }
+
+    @Override
+    public void onBoothClick(int position) {
+        Toast.makeText(this, "클릭한 아이템: " + booths.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+        // 비밀번호 입력 다이어로그 띄우기
+    }
+
 }
