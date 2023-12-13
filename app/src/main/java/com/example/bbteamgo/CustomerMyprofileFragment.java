@@ -33,7 +33,7 @@ public class CustomerMyprofileFragment extends Fragment {
     public EditText eText, eText2;
     public Button sendButton, cancelButton, sendButton2, cancelButton2;
     private FirebaseAuth auth;
-    private FirebaseFirestore firestore;
+    private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
     private MaterialButton resetPasswordButton;
 
@@ -176,8 +176,8 @@ public class CustomerMyprofileFragment extends Fragment {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         // 사용자 정보가 Firestore에 저장되어 있는 경우, UI에 표시
-                        String displayName = document.getString("displayName");
-                        String statusMessage = document.getString("statusMessage");
+                        String displayName = document.getString("display_name");
+                        String statusMessage = document.getString("status_message");
 
                         inputname.setText(displayName);
                         feelingMessage.setText(statusMessage);
@@ -192,7 +192,7 @@ public class CustomerMyprofileFragment extends Fragment {
         String displayName = eText.getText().toString();
 
         DocumentReference userRef = firestore.collection("User").document(uid);
-        userRef.update("displayName", displayName)
+        userRef.update("display_name", displayName)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -209,7 +209,7 @@ public class CustomerMyprofileFragment extends Fragment {
         String uid = auth.getCurrentUser().getUid();
         String statusMessage = eText2.getText().toString();
         DocumentReference userRef = firestore.collection("User").document(uid);
-        userRef.update("statusMessage", statusMessage)
+        userRef.update("status_message", statusMessage)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

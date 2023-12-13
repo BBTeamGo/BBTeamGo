@@ -30,8 +30,8 @@ public class LoginHelper {
         Map<String, Object> data = new HashMap<>();
         data.put("email", email);
         data.put("membership", membership);
-        data.put("displayName","처음방문");
-        data.put("statusMessage","처음 하는 일은 즐거워");
+        data.put("display_name","처음방문");
+        data.put("status_message","처음 하는 일은 즐거워");
         user.set(data, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {

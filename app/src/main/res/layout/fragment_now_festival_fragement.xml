@@ -79,10 +79,11 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/detailRecyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/festival_item_view" />
+            tools:listitem="@layout/item_festival_detail" />
 
 
 

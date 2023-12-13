@@ -46,7 +46,7 @@
             android:layout_height="150dp"
             android:layout_below="@+id/profile"
             android:layout_centerInParent="true"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="25dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileImg"
@@ -56,7 +56,6 @@
         </FrameLayout>
 
         <TextView
-
             android:id="@+id/namecard"
             style="@style/nameCard"
             android:layout_width="wrap_content"
@@ -73,6 +72,7 @@
             android:textColor="@color/white"
             android:textSize="20dp" />
         <TextView
+
             android:id="@+id/feelingMessage"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
@@ -85,8 +85,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="250dp"
+        >
 
         <LinearLayout
             android:id="@+id/profileEdit"

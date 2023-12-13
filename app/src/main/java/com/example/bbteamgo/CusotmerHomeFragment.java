@@ -1,5 +1,7 @@
 package com.example.bbteamgo;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,9 +26,16 @@ import android.widget.EditText;
 
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +59,7 @@ public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
+
     public static CusotmerHomeFragment newInstance(String param1, String param2) {
         CusotmerHomeFragment fragment = new CusotmerHomeFragment();
 
@@ -203,23 +212,19 @@ public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback
             festivalNameTextView = itemView.findViewById(R.id.festival_name);
             festivalExplainTextView = itemView.findViewById(R.id.festival_exp);
 
-
             NowFestivalFragement nowFestivalFragment = new NowFestivalFragement();
             //얘가 왜 정상적으로 넘어가지 않는 건지 진짜 알 수가 없네
             itemView.setOnClickListener(view -> {
                 getActivity().getSupportFragmentManager().beginTransaction().
                         replace(R.id.fragment_container_view_tag,new NowFestivalFragement()).commit();
-
             });
         }
-
         public void bind(Festival festival) {
             festivalNameTextView.setText(festival.getFestivalName());
             festivalExplainTextView.setText(festival.getFestivalExplain());
             // 필요한 경우 추가적인 데이터 바인딩 수행
         }
     }
-
     public class FestivalAdapter extends RecyclerView.Adapter<FestivalViewHolder> {
         private List<Festival> festivalList;
 
@@ -231,11 +236,8 @@ public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback
         @Override
         public FestivalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.festival_item_view, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_festival, parent, false);
             return new FestivalViewHolder(view); // CusotmerHomeFragment.this를 전달
-
-          
-
         }
 
         //    @Override
