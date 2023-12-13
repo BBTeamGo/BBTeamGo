@@ -33,7 +33,9 @@ public class CustomerMyprofileFragment extends Fragment {
     public EditText eText, eText2;
     public Button sendButton, cancelButton, sendButton2, cancelButton2;
     private FirebaseAuth auth;
-    private FirebaseFirestore database = FirebaseFirestore.getInstance();
+
+    private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
 
     private MaterialButton resetPasswordButton;
 
@@ -207,8 +209,10 @@ public class CustomerMyprofileFragment extends Fragment {
         String uid = auth.getCurrentUser().getUid();
         String displayName = eText.getText().toString();
 
-        DocumentReference userRef = database.collection("User").document(uid);
-        userRef.update("displayName", displayName)
+
+        DocumentReference userRef = firestore.collection("User").document(uid);
+        userRef.update("display_name", display_name)
+
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -224,8 +228,10 @@ public class CustomerMyprofileFragment extends Fragment {
     private void saveStatusMessage() {
         String uid = auth.getCurrentUser().getUid();
         String statusMessage = eText2.getText().toString();
-        DocumentReference userRef = database.collection("User").document(uid);
-        userRef.update("statusMessage", statusMessage)
+
+        DocumentReference userRef = firestore.collection("User").document(uid);
+        userRef.update("status_message", status_message)
+
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

@@ -36,9 +36,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".OrderScreenActivity"
-            android:exported="true" />
     </application>
 
 </manifest>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/booking_management_list_background"
+    android:elevation="10dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/festival_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/booking_management_list_background"
+            android:src="@drawable/festival_example_image" />
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="19/29명"
+            android:layout_toRightOf="@+id/detailName"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="20dp"
+
+            />
+        <TextView
+            android:id="@+id/detailName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="18dp"
+            android:layout_toRightOf="@+id/festival_image"
+            android:text="IT 대학 소모임"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/detailTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/detailName"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@+id/festival_image"
+            android:text="숭실대학교 IT대학의 주점!" />
+    </RelativeLayout>
+
+</LinearLayout>
