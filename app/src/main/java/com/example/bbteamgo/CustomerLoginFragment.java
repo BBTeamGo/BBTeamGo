@@ -1,6 +1,8 @@
 package com.example.bbteamgo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -46,6 +48,7 @@ public class CustomerLoginFragment extends Fragment {
 
     private FirebaseAuth userAuth;
     private FirebaseFirestore database;
+    private SharedPreferences sharedPreferences;
 
     public CustomerLoginFragment() {
         // Required empty public constructor
@@ -79,6 +82,7 @@ public class CustomerLoginFragment extends Fragment {
 
         userAuth = FirebaseAuth.getInstance();
         database = FirebaseFirestore.getInstance();
+        sharedPreferences = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -153,6 +157,10 @@ public class CustomerLoginFragment extends Fragment {
 
                             Intent intent = new Intent(getActivity(), CustomerActivity.class);
                             intent.putExtra("USER_PROFILE", "email: " + email + "\n" + "uid: " + user.getUid());
+
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putBoolean("isFastLogin", true);
+                            editor.putBoolean("isManagerLogin", false);
 
                             startActivity(intent);
                         } else {

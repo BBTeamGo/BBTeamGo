@@ -61,6 +61,9 @@ public class ManagerIncomeFragment extends Fragment {
         return fragment;
     }
 
+    RecyclerView recyclerView = null;
+    TextView totalIncomeText = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +88,9 @@ public class ManagerIncomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        recyclerView = view.findViewById(R.id.recycler_view);
+        totalIncomeText = view.findViewById(R.id.total_income);
+
         boothRef.collection("Order")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -104,9 +110,14 @@ public class ManagerIncomeFragment extends Fragment {
 
                             Collections.sort(orders, (Order a, Order b) -> a.getTime().compareTo(b.getTime()) );
 
-                            RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                             recyclerView.setAdapter(new OrderAdapter(getActivity(), orders));
+
+                            int totalIncome = 0;
+                            for (Order eachOrder : orders) {
+                                totalIncome += eachOrder.getAmount();
+                            }
+                            totalIncomeText.setText(totalIncome + "원");
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }

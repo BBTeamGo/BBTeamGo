@@ -33,7 +33,7 @@ public class CustomerMyprofileFragment extends Fragment {
     public EditText eText, eText2;
     public Button sendButton, cancelButton, sendButton2, cancelButton2;
     private FirebaseAuth auth;
-    private FirebaseFirestore firestore;
+    private FirebaseFirestore database = FirebaseFirestore.getInstance();
 
     private MaterialButton resetPasswordButton;
 
@@ -50,6 +50,7 @@ public class CustomerMyprofileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("PROFILE", "OnCreate()");
     }
 
     @Override
@@ -59,6 +60,7 @@ public class CustomerMyprofileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_customer_myprofile, container, false);
         auth = FirebaseAuth.getInstance();
         loadUserProfile();
+        Log.d("PROFILE", "OnCreateView()");
         return view;
     }
 
@@ -66,10 +68,15 @@ public class CustomerMyprofileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Log.d("PROFILE", "Start OnViewCreated()");
+
         inputname = view.findViewById(R.id.namecard);
         Dialog nameDialog;
         nameDialog = new Dialog(getActivity());
         nameDialog.setContentView(R.layout.namedialog);
+
+        Log.d("PROFILE", "Name Dialog");
+
         eText = nameDialog.findViewById(R.id.inputName);
         sendButton = nameDialog.findViewById(R.id.changeButton);
         cancelButton = nameDialog.findViewById(R.id.cancelButton);
@@ -134,6 +141,8 @@ public class CustomerMyprofileFragment extends Fragment {
         {
             sendPasswordResetEmail();
         });
+
+        Log.d("PROFILE", "OnViewCreated() End");
     }
 
     private void logout() {
@@ -165,10 +174,15 @@ public class CustomerMyprofileFragment extends Fragment {
     }
 
     private void loadUserProfile() {
+        Log.d("PROFILE", "Start LoadUserProfile");
         // 현재 로그인된 사용자의 UID 가져오기
-        String uid = auth.getCurrentUser().getUid();
+        String uid = auth.getCurrentUser().getUid().toString();
+        Log.d("PROFILE", "Complete Get UID: " + uid);
         // Firestore에서 해당 사용자의 정보 불러오기
-        DocumentReference userRef = firestore.collection("User").document(uid);
+        DocumentReference userRef = database.collection("User").document(uid);
+
+        Log.d("PROFILE", "Get Instance");
+
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -176,8 +190,8 @@ public class CustomerMyprofileFragment extends Fragment {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         // 사용자 정보가 Firestore에 저장되어 있는 경우, UI에 표시
-                        String displayName = document.getString("displayName");
-                        String statusMessage = document.getString("statusMessage");
+                        String displayName = document.getString("display_name");
+                        String statusMessage = document.getString("status_message");
 
                         inputname.setText(displayName);
                         feelingMessage.setText(statusMessage);
@@ -185,13 +199,15 @@ public class CustomerMyprofileFragment extends Fragment {
                 }
             }
         });
+
+        Log.d("PROFILE", "Complete");
     }
 
     private void saveDisplayName() {
         String uid = auth.getCurrentUser().getUid();
         String displayName = eText.getText().toString();
 
-        DocumentReference userRef = firestore.collection("User").document(uid);
+        DocumentReference userRef = database.collection("User").document(uid);
         userRef.update("displayName", displayName)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -208,7 +224,7 @@ public class CustomerMyprofileFragment extends Fragment {
     private void saveStatusMessage() {
         String uid = auth.getCurrentUser().getUid();
         String statusMessage = eText2.getText().toString();
-        DocumentReference userRef = firestore.collection("User").document(uid);
+        DocumentReference userRef = database.collection("User").document(uid);
         userRef.update("statusMessage", statusMessage)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

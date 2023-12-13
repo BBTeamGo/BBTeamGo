@@ -2,14 +2,11 @@ package com.example.bbteamgo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
-import com.example.bbteamgo.databinding.ActivityManagerBinding;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class ManagerActivity extends AppCompatActivity {
@@ -55,10 +52,25 @@ public class ManagerActivity extends AppCompatActivity {
                     return true;
                 }
                 else if(itemId== R.id.reservation_menu){
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container_view_tag,
+                                    ManagerReservationFragment.newInstance(university, booth))
+                            .commit();
                     return true;
                 } else if (itemId == R.id.order_menu) {
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container_view_tag,
+                                    CustomerOrderFragment.newInstance(university, booth))
+                            .commit();
                     return true;
                 } else if( itemId == R.id.myinfo_menu){
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container_view_tag,
+                                    new CustomerMyprofileFragment())
+                            .commit();
                     return true;
                 }
                 return false;
