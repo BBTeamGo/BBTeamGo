@@ -1,19 +1,12 @@
 package com.example.bbteamgo;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.bbteamgo.databinding.ActivityCustomerBinding;
-import com.google.android.material.navigation.NavigationBarItemView;
 import com.google.android.material.navigation.NavigationBarView;
 
 
@@ -23,8 +16,8 @@ import com.google.android.material.navigation.NavigationBarView;
         CusotmerHomeFragment cusotmerHomeFragment;
         CusotmerReservationFragment cusotmerReservationFragment;
         CustomerMyprofileFragment customerMyprofileFragment;
-        orderfragment orderfragment;
-        CustomerOrderScreenFragment customerOrderScreenFragment;
+        CustomerOrderFragment orderfragment;
+//        CustomerOrderScreenFragment customerOrderScreenFragment;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -34,8 +27,8 @@ import com.google.android.material.navigation.NavigationBarView;
             cusotmerHomeFragment = new CusotmerHomeFragment();
             cusotmerReservationFragment = new CusotmerReservationFragment();
             customerMyprofileFragment = new CustomerMyprofileFragment();
-            orderfragment = new orderfragment();
-            customerOrderScreenFragment = new CustomerOrderScreenFragment();
+            orderfragment = new CustomerOrderFragment();
+//            customerOrderScreenFragment = new CustomerOrderScreenFragment();
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag,cusotmerHomeFragment).commit();
 
@@ -55,7 +48,7 @@ import com.google.android.material.navigation.NavigationBarView;
                         return true;
                     }
                     else if(itemId== R.id.my_order_button){
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag,customerOrderScreenFragment).commit();
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag,customerOrderScreenFragment).commit();
                         return true;
                     }
                     else if( itemId == R.id.mypage){

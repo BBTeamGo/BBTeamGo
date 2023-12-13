@@ -51,15 +51,6 @@ public class ManagerTableFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ManagerTableFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ManagerTableFragment newInstance(String param1, String param2) {
         ManagerTableFragment fragment = new ManagerTableFragment();
         Bundle args = new Bundle();
@@ -69,7 +60,6 @@ public class ManagerTableFragment extends Fragment {
         return fragment;
     }
 
-    private FirebaseFirestore database;
     private DocumentReference boothRef;
 
     List<Table> tables = new ArrayList<>();
@@ -85,11 +75,13 @@ public class ManagerTableFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        database = FirebaseFirestore.getInstance();
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
         boothRef = database.collection("University")
                 .document(university)
                 .collection("Booth")
                 .document(booth);
+
+        Log.d(TAG, "onCreateView");
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_manager_table, container, false);
@@ -150,12 +142,12 @@ class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull TableViewHolder holder, int position) {
         if (tables.get(position).isUsed()) {
-            holder.tableState.setImageResource(R.drawable.used_table_background);
+            holder.tableState.setImageResource(R.drawable.table_background_used);
 
             int elapsedTime = tables.get(position).getElapsedTime();
             holder.elapsedTimeText.setText("경과 시간 " + String.valueOf(elapsedTime) + "분");
         } else {
-            holder.tableState.setImageResource(R.drawable.unused_table_background);
+            holder.tableState.setImageResource(R.drawable.table_background_unused);
             holder.elapsedTimeText.setText("");
         }
         holder.indexText.setText(String.valueOf(tables.get(position).getIndex()));
