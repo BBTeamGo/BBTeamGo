@@ -12,24 +12,24 @@ import com.example.bbteamgo.databinding.OrderScreenItemViewBinding;
 
 import java.util.List;
 
-public class OrderScreenAdapter extends RecyclerView.Adapter<CustomerOrderScreenFragment.OrderScreenViewHolder> {
+public class OrderScreenAdapter extends RecyclerView.Adapter<OrderScreenViewHolder> {
 
-    List<CustomerOrderScreenFragment.OrderScreenData> data;
+    List<OrderScreenData> data;
 
-    public OrderScreenAdapter(List<CustomerOrderScreenFragment.OrderScreenData> data) {
+    public OrderScreenAdapter(List<OrderScreenData> data) {
         this.data = data;
     }
 
     @NonNull
     @Override
-    public CustomerOrderScreenFragment.OrderScreenViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public OrderScreenViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         OrderScreenItemViewBinding binding = OrderScreenItemViewBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new CustomerOrderScreenFragment.OrderScreenViewHolder(binding);
+        return new OrderScreenViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomerOrderScreenFragment.OrderScreenViewHolder holder, int position) {
-        CustomerOrderScreenFragment.OrderScreenData item = data.get(position);
+    public void onBindViewHolder(@NonNull OrderScreenViewHolder holder, int position) {
+        OrderScreenData item = data.get(position);
         holder.binding.menuName.setText(data.get(position).getMenu_name());
         holder.binding.menuPrice.setText(String.valueOf(data.get(position).getMenu_price()));
 
