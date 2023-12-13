@@ -65,6 +65,8 @@ public class ManagerSelectBoothActivity extends AppCompatActivity implements Boo
 
                     }
                 });
+
+        Log.d(TAG, "End OnCreate()");
     }
 
     private void makeBoothArray() {

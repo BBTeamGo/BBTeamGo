@@ -156,7 +156,8 @@ public class CustomerLoginFragment extends Fragment {
                             FirebaseUser user = userAuth.getCurrentUser();
 
                             Intent intent = new Intent(getActivity(), CustomerActivity.class);
-                            intent.putExtra("USER_PROFILE", "email: " + email + "\n" + "uid: " + user.getUid());
+                            intent.putExtra("USER_ID", user.getUid());
+                            intent.putExtra("USER_EMAIL", email);
 
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putBoolean("isFastLogin", true);

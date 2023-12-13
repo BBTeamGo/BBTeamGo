@@ -53,7 +53,6 @@ public class ManagerLoginFragment extends Fragment {
     private FirebaseFirestore database;
     private SharedPreferences sharedPreferences;
 
-
     public ManagerLoginFragment() {
         // Required empty public constructor
     }
@@ -86,12 +85,13 @@ public class ManagerLoginFragment extends Fragment {
 
         userAuth = FirebaseAuth.getInstance();
         database = FirebaseFirestore.getInstance();
-        sharedPreferences = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        sharedPreferences = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_manager_login, container, false);
     }
@@ -162,7 +162,8 @@ public class ManagerLoginFragment extends Fragment {
                             FirebaseUser user = userAuth.getCurrentUser();
 
                             Intent intent = new Intent(getActivity(), ManagerSelectBoothActivity.class);
-                            intent.putExtra("USER_PROFILE", "email: " + email + "\n" + "uid: " + user.getUid());
+                            intent.putExtra("USER_ID", user.getUid());
+                            intent.putExtra("USER_EMAIL", email);
 
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putBoolean("isFastLogin", true);

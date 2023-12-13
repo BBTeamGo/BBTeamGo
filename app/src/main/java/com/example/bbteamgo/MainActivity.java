@@ -51,17 +51,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (isFastLogin) {
             Intent intent = null;
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("isFastLogin", true);
 
             if (isManagerLogin) {
                 intent = new Intent(this, ManagerSelectBoothActivity.class);
-                editor.putBoolean("isManagerLogin", true);
 
             } else {
                 intent = new Intent(this, CustomerActivity.class);
-                editor.putBoolean("isB", true);
-                editor.putBoolean("isManagerLogin", false);
             }
 
             Log.d(TAG, "fast Login email:" + currentUser.getEmail());
