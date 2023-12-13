@@ -39,22 +39,26 @@ public class ManagerActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
 
-                if(itemId == R.id.table_menu) {
+                if( itemId == R.id.table_menu ) {
                     getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.fragment_container_view_tag,
-                                    ManagerTableFragment.newInstance(university, booth))
+                            .replace(R.id.fragment_container_view_tag, ManagerTableFragment.newInstance(university, booth))
                             .commit();
-
                     return true;
                 }
                 else if(itemId == R.id.income_menu){
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container_view_tag,
+                                    ManagerIncomeFragment.newInstance(university, booth))
+                            .commit();
                     return true;
-                } else if(itemId == R.id.reservation_menu) {
+                }
+                else if(itemId== R.id.reservation_menu){
                     return true;
                 } else if (itemId == R.id.order_menu) {
                     return true;
-                } else if(itemId == R.id.myinfo_menu) {
+                } else if( itemId == R.id.myinfo_menu){
                     return true;
                 }
                 return false;

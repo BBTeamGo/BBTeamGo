@@ -20,9 +20,9 @@ public class ManagerBoothSelectEnterPasswordFragment extends DialogFragment {
 
     String userId = null;
     String userEmail = null;
-    String userUniversity = null;
-    String userBooth = null;
     String password = null;
+    String booth = null;
+    String university = null;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -34,14 +34,14 @@ public class ManagerBoothSelectEnterPasswordFragment extends DialogFragment {
 
         Bundle args = getArguments();
         if (args != null) {
+            booth = args.getString("BOOTH_NAME");
             userId = args.getString("USER_ID");
             userEmail = args.getString("USER_EMAIL");
             password = args.getString("BOOTH_PASSWORD");
-            userUniversity = args.getString("UNIVERSITY_NAME");
-            userBooth = args.getString("BOOTH_NAME");
-            TextView textView = dialog.findViewById(R.id.title);
-            textView.setText(userBooth);
+            university = args.getString("UNIVERSITY_NAME");
 
+            TextView textView = dialog.findViewById(R.id.title);
+            textView.setText(booth);
             Log.d(TAG, "password is :" + password);
         }
 
@@ -64,8 +64,8 @@ public class ManagerBoothSelectEnterPasswordFragment extends DialogFragment {
                     Intent intent = new Intent(getActivity(), ManagerActivity.class);
                     intent.putExtra("USER_EMAIL", userEmail);
                     intent.putExtra("USER_ID", userId);
-                    intent.putExtra("BOOTH_NAME", userBooth);
-                    intent.putExtra("UNIVERSITY_NAME", userUniversity);
+                    intent.putExtra("BOOTH_NAME", booth);
+                    intent.putExtra("UNIVERSITY_NAME", university);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getActivity(), "부스 인증에 실패하였습니다.", Toast.LENGTH_SHORT).show();

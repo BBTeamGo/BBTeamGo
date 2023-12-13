@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:text="경과 시간 10분"
         android:textSize="14sp"
-        android:textColor="@color/black"
+        android:textColor="@color/grey"
         android:layout_marginBottom="16dp"
         app:layout_constraintStart_toStartOf="@id/table_state"
         app:layout_constraintEnd_toEndOf="@id/table_state"
