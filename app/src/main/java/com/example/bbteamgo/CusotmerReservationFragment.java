@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,43 @@ public class CusotmerReservationFragment extends Fragment {
 
 
     }
+    private  class ReservationViewHolder extends RecyclerView.ViewHolder{
+
+        //여기에 바인딩을 할 내 목록과 관련된 xml 하나를 걸어두면 된다!
+
+        public ReservationViewHolder(@NonNull View itemView) { //여기에 들어가는 매개변수도 binding형태로 넣고 얘가 어떤 애인지 알려주고
+            super(itemView);
+
+        }
+        private void bind(){
+            //내가 필요한 매개변수 같은 것들을 넣어서 설정해주면 되는 것이다.
+            //firebase로 그 안에 있는 것까지 접근하게끔 코드를 작성하면 될듯
+        }
+    }
+    private class ReservationAdapter extends RecyclerView.Adapter<ReservationViewHolder>{
+
+        @NonNull
+        @Override
+        public ReservationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
+
+
+            return null;
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ReservationViewHolder holder, int position) {
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return 0;
+        }
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
