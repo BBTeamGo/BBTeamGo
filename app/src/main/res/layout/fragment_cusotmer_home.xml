@@ -18,18 +18,20 @@
             android:layout_height="match_parent">
 
             <FrameLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
 
                 <fragment
-                    android:layout_marginTop="20dp"
+
                     android:id="@+id/map"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
                 <EditText
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/search_input"
                     android:id="@+id/search"
                     android:layout_width="match_parent"
@@ -58,7 +60,7 @@
         <LinearLayout
             android:id="@+id/festivalLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="430dp"
             android:layout_marginTop="300dp"
             android:layout_weight="1"
             android:background="@drawable/bottom_sheet_background"
@@ -83,7 +85,7 @@
                 android:layout_weight="1"
                 android:scrollbars="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/festival_item_view" />
+                tools:listitem="@layout/item_festival" />
 
 
         </LinearLayout>

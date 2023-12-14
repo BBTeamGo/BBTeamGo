@@ -51,7 +51,7 @@ public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback
     private RecyclerView recyclerView;
     private FestivalAdapter festivalAdapter;
 
-
+    public String festivalId;
     private GoogleMap mMap;
 
 
@@ -126,7 +126,7 @@ public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback
         //여기서 return 시킨 view를 띄우는 onViewCreated에 띄우는거네 ㅇㅋ
     }
 
-    private void loadFestivalData() {
+    public void loadFestivalData() {
         // Firestore의 "festivals" 컬렉션에서 데이터를 가져옴
         firestore.collection("University")
                 .get()
@@ -136,7 +136,10 @@ public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback
 
                         // 가져온 데이터를 Festival 객체로 변환하여 리스트에 추가
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            String festivalId = document.getId();
+                            festivalId = document.getId();
+                            //이렇게 되니까 마지막의 festivalid만 남게 되는거구나
+                            Log.d("cmh", "festivalIdcheck" + festivalId);
+
                             String festivalName = document.getString("festival_name");
                             String festivalExplain = document.getString("explain_text");
                             String festivalImg = document.getString("picture_url");
@@ -204,27 +207,36 @@ public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback
     public class FestivalViewHolder extends RecyclerView.ViewHolder {
         private TextView festivalNameTextView;
         private TextView festivalExplainTextView;
+        private TextView festivalIdTextView;
         private CusotmerHomeFragment customerHomeFragment;
 
         public FestivalViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            //item객체를 하나씩 접근할 수는 없는 건가?
             festivalNameTextView = itemView.findViewById(R.id.festival_name);
             festivalExplainTextView = itemView.findViewById(R.id.festival_exp);
-
+            festivalIdTextView = itemView.findViewById(R.id.festivalIdd);
             NowFestivalFragement nowFestivalFragment = new NowFestivalFragement();
             //얘가 왜 정상적으로 넘어가지 않는 건지 진짜 알 수가 없네
             itemView.setOnClickListener(view -> {
+                Bundle args = new Bundle();
+                args.putString("cmh", festivalIdTextView.getText().toString());
+                nowFestivalFragment.setArguments(args);
+                args.putString("cmh2",festivalNameTextView.getText().toString());
+                nowFestivalFragment.setArguments(args);
                 getActivity().getSupportFragmentManager().beginTransaction().
-                        replace(R.id.fragment_container_view_tag,new NowFestivalFragement()).commit();
+                        replace(R.id.fragment_container_view_tag, nowFestivalFragment).commit();
             });
         }
+
         public void bind(Festival festival) {
             festivalNameTextView.setText(festival.getFestivalName());
             festivalExplainTextView.setText(festival.getFestivalExplain());
+            festivalIdTextView.setText(festival.getFestivalId());
             // 필요한 경우 추가적인 데이터 바인딩 수행
         }
     }
+
     public class FestivalAdapter extends RecyclerView.Adapter<FestivalViewHolder> {
         private List<Festival> festivalList;
 
@@ -272,9 +284,9 @@ public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        LatLng SoongSil = new LatLng(37.2946, 126.5726);
+        LatLng SoongSil = new LatLng(37.494705526855, 126.95994559383);
         mMap.addMarker(new MarkerOptions().position(SoongSil).title("Marker in SoongSil"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SoongSil, 14));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SoongSil, 16));
 
     }
 

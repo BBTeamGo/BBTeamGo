@@ -36,6 +36,8 @@ public class CusotmerReservationFragment extends Fragment {
 
 
     }
+    //여기에도 이제 이거는 db에 내 예약으로 내가 예약한 것들의 정보를 보내주고 그걸 띄워주는 형식으로 데이터를 받아야겠
+    //user의 예약 정보
     private  class ReservationViewHolder extends RecyclerView.ViewHolder{
 
         //여기에 바인딩을 할 내 목록과 관련된 xml 하나를 걸어두면 된다!
@@ -54,7 +56,6 @@ public class CusotmerReservationFragment extends Fragment {
         @NonNull
         @Override
         public ReservationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
 
 
 
