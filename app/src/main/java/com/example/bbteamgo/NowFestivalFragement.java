@@ -1,5 +1,6 @@
 package com.example.bbteamgo;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,12 +32,15 @@ import java.util.List;
 
 public class NowFestivalFragement extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
-    private TextView textView;
+    private TextView textView,festivalNameTextView;
 
     private DetailAdapter detailAdapter;
 
     private RecyclerView recyclerView;
 
+    private Bundle bundle ;
+    private String festivalId ;
+    private  String festivalName;
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
     public NowFestivalFragement() {
@@ -93,17 +97,19 @@ public class NowFestivalFragement extends Fragment implements OnMapReadyCallback
 
 
     private void loadDetailData() {
-        // Firestore의 "festivals" 컬렉션에서 데이터를 가져옴
-        firestore.collection("University").document().collection("Pubs")
+        // Firestore의 "detail" 컬렉션에서 데이터를 가져옴
+        //전의 fragment에서 보내준 데이터를 받아서 그걸 가지고 document부분을 채워주면되겠네
+        firestore.collection("University").document(festivalId).collection("Pubs")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         List<Detail> detailList = new ArrayList<>();
-
+                        Log.d("cmh","firebase ok");
+                        Log.d("cmh",festivalId);
                         // 가져온 데이터를 Festival 객체로 변환하여 리스트에 추가
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            String festivalId = document.getId();
                             String detailName = document.getString("name");
+                            Log.d("cmh",detailName);
                             String detailTxt = document.getString("detail");
                             String TotalPeople = document.getString("Total");
 
@@ -124,18 +130,24 @@ public class NowFestivalFragement extends Fragment implements OnMapReadyCallback
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        bundle = getArguments();
+        festivalId = bundle.getString("cmh");
+        festivalName = bundle.getString("cmh2");
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_now_festival_fragement, container, false);
-
+        Log.d("cmh","oncreateview");
         recyclerView = view.findViewById(R.id.detailRecyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         loadDetailData();
-
+        festivalNameTextView= view.findViewById(R.id.festivalName);
+        festivalNameTextView.setText(festivalName);
         return view;
     }
 
@@ -152,6 +164,9 @@ public class NowFestivalFragement extends Fragment implements OnMapReadyCallback
             getActivity().getSupportFragmentManager().beginTransaction().
                     replace(R.id.fragment_container_view_tag, new CusotmerHomeFragment()).commit();
         });
+
+
+
     }
 
     private class DetailViewHolder extends RecyclerView.ViewHolder {
@@ -165,7 +180,14 @@ public class NowFestivalFragement extends Fragment implements OnMapReadyCallback
             detailNameTextView = itemView.findViewById(R.id.detailName);
             detailTextView = itemView.findViewById(R.id.detailTxt);
             countTextView = itemView.findViewById(R.id.count);
-
+            Dialog reservationDialog;
+            reservationDialog =new Dialog(getActivity());
+            reservationDialog.setContentView(R.layout.reservation_dialog);
+            itemView.setOnClickListener(view1->{
+                //여기서 넘겨 받아서 다이얼로그 띄우기
+                //다이얼로그 만들어서 띄우면 되는 것이다.
+                    reservationDialog.show();
+            });
         }
 
         private void bind(Detail detail) {
@@ -207,9 +229,9 @@ public class NowFestivalFragement extends Fragment implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        LatLng SoongSil = new LatLng(37.2946, 126.5726);
+        LatLng SoongSil = new LatLng(37.494705526855, 126.95994559383);
         mMap.addMarker(new MarkerOptions().position(SoongSil).title("Marker in SoongSil"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SoongSil, 14));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SoongSil, 16));
 
     }
 
