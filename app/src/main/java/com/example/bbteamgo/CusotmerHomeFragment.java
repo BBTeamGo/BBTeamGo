@@ -248,8 +248,10 @@ public class CusotmerHomeFragment extends Fragment implements OnMapReadyCallback
         @Override
         public FestivalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
+
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_festival, parent, false);
             return new FestivalViewHolder(view); // CusotmerHomeFragment.this를 전달
+
         }
 
         //    @Override

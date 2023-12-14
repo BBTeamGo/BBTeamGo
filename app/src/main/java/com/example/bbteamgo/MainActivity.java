@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth userAuth;
     private FirebaseFirestore database;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         userAuth = FirebaseAuth.getInstance();
         database = FirebaseFirestore.getInstance();
+        sharedPreferences = getSharedPreferences("Login", MODE_PRIVATE);
     }
 
     @Override
@@ -43,14 +46,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void reload(FirebaseUser currentUser) {
-        boolean isFastLogin = true, isManagerLogin = true;
+        boolean isFastLogin = sharedPreferences.getBoolean("isFastLogin", false);
+        boolean isManagerLogin = sharedPreferences.getBoolean("isManagerLogin", false);
 
         if (isFastLogin) {
             Intent intent = null;
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("isFastLogin", true);
+
             if (isManagerLogin) {
                 intent = new Intent(this, ManagerSelectBoothActivity.class);
+                editor.putBoolean("isManagerLogin", true);
+
             } else {
                 intent = new Intent(this, CustomerActivity.class);
+                editor.putBoolean("isB", true);
+                editor.putBoolean("isManagerLogin", false);
             }
 
             Log.d(TAG, "fast Login email:" + currentUser.getEmail());
